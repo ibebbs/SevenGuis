@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="Timer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Timer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <local:LongToDoubleConverter x:Key="LongToDoubleConverter"/>
+        <local:TicksToSecondsConverter x:Key="TicksToSecondsConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" MinWidth="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="200"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Elapsed Time:" Grid.Column="0" Margin="4"/>
+                <ProgressBar Maximum="{Binding MaxTicks, Converter={StaticResource LongToDoubleConverter}, Mode=OneWay}" Minimum="0" Value="{Binding ElapsedTicks, Converter={StaticResource LongToDoubleConverter}, Mode=TwoWay}" Grid.Column="1" Margin="4" VerticalAlignment="Stretch"/>
+            </Grid>
+            <TextBlock Grid.Row="1" Text="{Binding ElapsedTicks, Converter={StaticResource TicksToSecondsConverter}}" Margin="4"/>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="200"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Duration:" Grid.Column="0" Margin="4"/>
+                <Slider Minimum="{x:Bind local:MainPageViewModel.MinTickValue, Converter={StaticResource LongToDoubleConverter}}" Value="{Binding MaxTicks, Converter={StaticResource LongToDoubleConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Maximum="{x:Bind local:MainPageViewModel.MaxTickValue, Converter={StaticResource LongToDoubleConverter}}" Grid.Column="1" Margin="4" VerticalAlignment="Stretch" ThumbToolTipValueConverter="{StaticResource TicksToSecondsConverter}"/>
+            </Grid>
+            <Button Grid.Row="3" Content="Reset" Command="{Binding Reset}" HorizontalAlignment="Stretch" Margin="4"/>
+        </Grid>
+    </Grid>
+</Page>
