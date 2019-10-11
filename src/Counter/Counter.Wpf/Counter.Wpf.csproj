@@ -10,4 +10,6 @@
     <ProjectReference Include="..\Counter.Common\Counter.Common.csproj" />
   </ItemGroup>
 
+  <Import Project="..\Counter.Shared\Counter.Shared.projitems" Label="Shared" />
+
 </Project>
