@@ -5,7 +5,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 
-namespace Counter.Shared.Models
+namespace Counter.Common
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {

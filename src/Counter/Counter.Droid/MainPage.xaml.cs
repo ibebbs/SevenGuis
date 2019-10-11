@@ -22,13 +22,13 @@ namespace Counter
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly Counter.Shared.Models.MainPageViewModel _viewModel;
+        private readonly Common.MainPageViewModel _viewModel;
 
         public MainPage()
         {
             InitializeComponent();
 
-            _viewModel = new Counter.Shared.Models.MainPageViewModel();
+            _viewModel = new Common.MainPageViewModel();
 
             DataContext = _viewModel;
         }

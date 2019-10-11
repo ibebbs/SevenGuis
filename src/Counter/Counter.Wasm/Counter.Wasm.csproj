@@ -6,6 +6,7 @@
     <WasmHead>true</WasmHead>
     <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
     <NoWarn>NU1701</NoWarn>
+    <MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\Counter.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
@@ -25,6 +26,12 @@
     You can safely remove this ItemGroup completely.
     -->
     <Compile Remove="Program.cs" />
+    <None Remove="App.xaml" />
+    <None Remove="MainPage.xaml" />
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
     <Compile Include="Program.cs" />
     <Content Include="LinkerConfig.xml" />
     <Content Include="wwwroot/web.config" />
@@ -37,6 +44,23 @@
     <PackageReference Include="Uno.UI" Version="1.45.0" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.244" />
     <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.244" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Counter.Common\Counter.Common.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="..\Counter.Shared\Counter.Shared.projitems" Label="Shared" Condition="Exists('..\Counter.Shared\Counter.Shared.projitems')" />
 </Project>

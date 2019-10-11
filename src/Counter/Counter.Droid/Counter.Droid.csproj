@@ -70,7 +70,13 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Main.cs" />
   </ItemGroup>
@@ -90,6 +96,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Counter.Common\Counter.Common.csproj">
+      <Project>{79650030-06f5-4760-9954-0975eb42f4f7}</Project>
+      <Name>Counter.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\Counter.Shared\Counter.Shared.projitems" Label="Shared" Condition="Exists('..\Counter.Shared\Counter.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

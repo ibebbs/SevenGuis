@@ -1,4 +1,5 @@
 ﻿<linker>
+  <assembly fullname="Counter.Common" />
   <assembly fullname="Counter.Wasm" />
   <assembly fullname="Uno.UI" />
 
