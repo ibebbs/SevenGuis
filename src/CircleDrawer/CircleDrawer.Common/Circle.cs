@@ -3,6 +3,7 @@ using System.Drawing;
 
 namespace CircleDrawer
 {
+    [Bindable(BindableSupport.Default)]
     public class Circle : INotifyPropertyChanged
     {
         private Point _origin;

@@ -33,14 +33,14 @@
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="LightGray"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="LightGray"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -74,8 +74,8 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Ellipse x:Name="OuterEllipse" Fill="{StaticResource RadioButtonOuterEllipseFill}" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" Stroke="{ThemeResource RadioButtonOuterEllipseStroke}" UseLayoutRounding="False"/>
-                            <Ellipse x:Name="CheckEllipse" RightTapped="RadioButton_RightTapped" Fill="LightGray" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" Stroke="Transparent" UseLayoutRounding="False">
+                            <Ellipse x:Name="OuterEllipse" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="1" Stroke="Black" UseLayoutRounding="False"/>
+                            <Ellipse x:Name="CheckEllipse" RightTapped="RadioButton_RightTapped" Fill="LightGray" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="1" Stroke="Transparent" UseLayoutRounding="False">
                                 <FlyoutBase.AttachedFlyout>
                                     <MenuFlyout>
                                         <MenuFlyoutItem Text="Adjust diameter..." Command="{Binding ElementName=ContextRoot, Path=DataContext.AdjustDiameter}" CommandParameter="{Binding}"/>
@@ -96,16 +96,17 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Undo" Command="{Binding Undo}" Margin="4"/>
             <Button Content="Redo" Command="{Binding Redo}" Margin="4"/>
+            <TextBlock x:Name="DebugText" Text="None"/>
         </StackPanel>
-        <ListBox x:Name="CirclesContainer" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <ListBox x:Name="CirclesContainer" Background="Blue" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                    <Canvas />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
         <Popup x:Name="AdjustDiameterDialog" IsLightDismissEnabled="True">
-            <Grid Grid.Row="2" Background="{ThemeResource ContentDialogBackgroundThemeBrush}" HorizontalAlignment="Stretch" Padding="10" Width="{Binding ElementName=ContextRoot, Path=ActualWidth}">
+            <Grid Grid.Row="2" Background="LightGray" HorizontalAlignment="Stretch" Padding="10" Width="{Binding ElementName=ContextRoot, Path=ActualWidth}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

@@ -18,13 +18,14 @@ namespace CircleDrawer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private static IEnumerable<System.Drawing.Point> GetAreaPoint(TappedRoutedEventArgs args)
+        private IEnumerable<System.Drawing.Point> GetAreaPoint(TappedRoutedEventArgs args)
         {
             switch (args.OriginalSource)
             {
-                case Canvas canvas:
-                    var location = args.GetPosition(canvas);
+                case ListBox listbox:
+                    var location = args.GetPosition(listbox);
                     yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
+                    DebugText.Text = $"{args.OriginalSource.GetType().Name}";
                     break;
             }
         }

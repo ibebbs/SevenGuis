@@ -93,6 +93,7 @@ Global
 		Counter\Counter.Shared\Counter.Shared.projitems*{418c80c6-f373-4f87-82d9-4df99e268107}*SharedItemsImports = 4
 		FlightBooker\FlightBooker.Shared\FlightBooker.Shared.projitems*{42b6715b-85c1-4c73-aafe-ba83eeb1ecd9}*SharedItemsImports = 4
 		CircleDrawer\CircleDrawer.Shared\CircleDrawer.Shared.projitems*{46c2495d-6f01-48e6-8204-6b4c1dc3b259}*SharedItemsImports = 13
+		CircleDrawer\CircleDrawer.Shared\CircleDrawer.Shared.projitems*{5a1196fc-4c10-42d0-81f6-9c5856e4bf8d}*SharedItemsImports = 4
 		Counter\Counter.Shared\Counter.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
 		FlightBooker\FlightBooker.Shared\FlightBooker.Shared.projitems*{816b01fa-583d-4901-a4ca-429e149c27e6}*SharedItemsImports = 13
 		TemperatureConverter\TemperatureConverter.Shared\TemperatureConverter.Shared.projitems*{aa8be35f-e131-46b4-930d-68e09cac033e}*SharedItemsImports = 4

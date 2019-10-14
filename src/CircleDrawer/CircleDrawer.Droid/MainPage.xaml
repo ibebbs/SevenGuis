@@ -97,17 +97,12 @@
             <Button Content="Undo" Command="{Binding Undo}" Margin="4"/>
             <Button Content="Redo" Command="{Binding Redo}" Margin="4"/>
         </StackPanel>
-        <ListBox x:Name="CirclesContainer" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <ListBox x:Name="CirclesContainer" Background="LightBlue" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Background="Black" />
+                    <Canvas  />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Ellipse Width="0" Height="0"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
         </ListBox>
         <Popup x:Name="AdjustDiameterDialog" IsLightDismissEnabled="True">
             <Grid Grid.Row="2" HorizontalAlignment="Stretch" Padding="10" Width="{Binding ElementName=ContextRoot, Path=ActualWidth}">

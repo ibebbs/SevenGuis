@@ -22,8 +22,8 @@ namespace CircleDrawer
         {
             switch (args.OriginalSource)
             {
-                case Canvas canvas:
-                    var location = args.GetPosition(canvas);
+                case ListBox listbox:
+                    var location = args.GetPosition(listbox);
                     yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
                     break;
             }
@@ -42,7 +42,7 @@ namespace CircleDrawer
 
             DataContext = _viewModel;
 
-            CirclesContainer.Tapped += (s, e) => System.Diagnostics.Debugger.Break();
+            //CirclesContainer.Tapped += (s, e) => System.Diagnostics.Debugger.Break();
 
             _emptyAreaClicked = Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(handler => CirclesContainer.Tapped += handler, handler => CirclesContainer.Tapped -= handler)
