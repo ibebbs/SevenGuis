@@ -55,7 +55,7 @@ namespace Cells.Common.Spreadsheet.Expression
                 .SelectMany(row => Enumerable
                     .Range((int)fromIndex.Column, (int)toIndex.Column - (int)fromIndex.Column + 1)
                     .Select(column => new Index(row, (char)column)))
-                .Select(Evaluate)
+                .Select(index => Evaluate(index))
                 .ToArray();
         }
 
@@ -107,8 +107,8 @@ namespace Cells.Common.Spreadsheet.Expression
 
         private object Add(ParseTreeNode leftNode, ParseTreeNode rightNode)
         {
-            var leftValue = Evaluate((Index)Visit(leftNode));
-            var rightValue = Evaluate((Index)Visit(rightNode));
+            var leftValue = Evaluate(Visit(leftNode));
+            var rightValue = Evaluate(Visit(rightNode));
 
             switch (leftValue)
             {
@@ -122,8 +122,8 @@ namespace Cells.Common.Spreadsheet.Expression
 
         private object Subtract(ParseTreeNode leftNode, ParseTreeNode rightNode)
         {
-            var leftValue = Evaluate((Index)Visit(leftNode));
-            var rightValue = Evaluate((Index)Visit(rightNode));
+            var leftValue = Evaluate(Visit(leftNode));
+            var rightValue = Evaluate(Visit(rightNode));
 
             switch (leftValue)
             {
@@ -137,8 +137,8 @@ namespace Cells.Common.Spreadsheet.Expression
 
         private object Multiply(ParseTreeNode leftNode, ParseTreeNode rightNode)
         {
-            var leftValue = Evaluate((Index)Visit(leftNode));
-            var rightValue = Evaluate((Index)Visit(rightNode));
+            var leftValue = Evaluate(Visit(leftNode));
+            var rightValue = Evaluate(Visit(rightNode));
 
             switch (leftValue)
             {
@@ -227,9 +227,13 @@ namespace Cells.Common.Spreadsheet.Expression
             }
         }
 
-        private object Evaluate(Index index)
+        private object Evaluate(object source)
         {
-            return _lookup.Invoke(index) ?? null;
+            switch (source)
+            {
+                case Index index: return _lookup.Invoke(index);
+                default: return source;
+            }
         }
 
         public object Evaluate(string text)
