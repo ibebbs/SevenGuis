@@ -2,13 +2,12 @@
 using Irony.Parsing;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using XLParser;
 
 namespace Cells.Common.Spreadsheet.Expression
 {
-    public class Evaluator
+    public class Evaluator : Visitor<object>
     {
         public static readonly string InvalidReference = "#ref";
         public static readonly string InvalidValue = "#value";
@@ -69,86 +68,6 @@ namespace Cells.Common.Spreadsheet.Expression
             _lookup = lookup;
         }
 
-        private object VisitFormula(ParseTreeNode node)
-        {
-            return Evaluate(Visit(node.ChildNodes[0]));
-        }
-
-        private object VisitConstant(ParseTreeNode node)
-        {
-            return Visit(node.ChildNodes[0]);
-        }
-
-        private object VisitNumber(ParseTreeNode node)
-        {
-            return Visit(node.ChildNodes[0]);
-        }
-
-        private object VisitReference(ParseTreeNode node)
-        {
-            return Visit(node.ChildNodes[0]);
-        }
-
-        private object ReferenceRange(ParseTreeNode fromNode, ParseTreeNode toNode)
-        {
-            var fromIndex = (Index)Visit(fromNode);
-            var toIndex = (Index)Visit(toNode);
-
-            return Enumerable
-                .Range(fromIndex.Row, toIndex.Row - fromIndex.Row + 1)
-                .SelectMany(row => Enumerable
-                    .Range((int)fromIndex.Column, (int)toIndex.Column - (int)fromIndex.Column + 1)
-                    .Select(column => new Index(row, (char)column)))
-                .Select(index => Evaluate(index))
-                .ToArray();
-        }
-
-        private object VisitReferenceFunctionCall(ParseTreeNode node)
-        {
-            var function = node.GetFunction();
-
-            switch (function)
-            {
-                case ":": return ReferenceRange(node.ChildNodes[0], node.ChildNodes[2]);
-                default: throw new InvalidOperationException();
-            }
-        }
-
-        private object VisitNamedRange(ParseTreeNode node)
-        {
-            return Visit(node.ChildNodes[0]);
-        }
-
-        private object VisitNumberToken(ParseTreeNode node)
-        {
-            return node.Token.Value;
-        }
-
-        private object VisitNameToken(ParseTreeNode node)
-        {
-            return Index.Parse((string)node.Token.Value);
-        }
-
-        private object VisitArguments(ParseTreeNode node)
-        {
-            return node.ChildNodes.Select(Visit).ToArray();
-        }
-
-        private object VisitArgument(ParseTreeNode node)
-        {
-            return Visit(node.ChildNodes[0]);
-        }
-
-        private object VisitCell(ParseTreeNode node)
-        {
-            return Visit(node.ChildNodes[0]);
-        }
-
-        private object VisitCellToken(ParseTreeNode node)
-        {
-            return Index.Parse((string)node.Token.Value);
-        }
-
         private Type GetMostAppropriateType(params object[] values)
         {
             return values
@@ -203,7 +122,26 @@ namespace Cells.Common.Spreadsheet.Expression
             }
         }
 
-        private object VisitFunctionCall(ParseTreeNode node)
+        private object ReferenceRange(ParseTreeNode fromNode, ParseTreeNode toNode)
+        {
+            var fromIndex = (Index)Visit(fromNode);
+            var toIndex = (Index)Visit(toNode);
+
+            return Enumerable
+                .Range(fromIndex.Row, toIndex.Row - fromIndex.Row + 1)
+                .SelectMany(row => Enumerable
+                    .Range((int)fromIndex.Column, (int)toIndex.Column - (int)fromIndex.Column + 1)
+                    .Select(column => new Index(row, (char)column)))
+                .Select(index => Evaluate(index))
+                .ToArray();
+        }
+
+        protected override object VisitFormula(ParseTreeNode node)
+        {
+            return Evaluate(base.VisitFormula(node));
+        }
+
+        protected override object VisitFunctionCall(ParseTreeNode node)
         {
             var function = node.GetFunction().ToUpper();
 
@@ -219,26 +157,35 @@ namespace Cells.Common.Spreadsheet.Expression
             }
         }
 
-
-        private object Visit(ParseTreeNode node)
+        protected override object VisitReferenceFunctionCall(ParseTreeNode node)
         {
-            switch (node.Term)
+            var function = node.GetFunction();
+
+            switch (function)
             {
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.Formula): return VisitFormula(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.FunctionCall): return VisitFunctionCall(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.Constant): return VisitConstant(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.Number): return VisitNumber(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.Reference): return VisitReference(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.ReferenceFunctionCall): return VisitReferenceFunctionCall(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.NamedRange): return VisitNamedRange(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.Arguments): return VisitArguments(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.Argument): return VisitArgument(node);
-                case NonTerminal nonTerminal when nonTerminal.Name == nameof(ExcelFormulaGrammar.Cell): return VisitCell(node);
-                case Terminal terminal when terminal.Name == nameof(ExcelFormulaGrammar.NumberToken): return VisitNumberToken(node);
-                case Terminal terminal when terminal.Name == nameof(ExcelFormulaGrammar.NameToken): return VisitNameToken(node);
-                case Terminal terminal when terminal.Name == nameof(ExcelFormulaGrammar.CellToken): return VisitCellToken(node);
-                default: throw new ArgumentException("node");
+                case ":": return ReferenceRange(node.ChildNodes[0], node.ChildNodes[2]);
+                default: throw new InvalidOperationException();
             }
+        }
+
+        protected override object VisitArguments(ParseTreeNode node)
+        {
+            return node.ChildNodes.Select(Visit).ToArray();
+        }
+
+        protected override object VisitCellToken(ParseTreeNode node)
+        {
+            return Index.Parse((string)node.Token.Value);
+        }
+
+        protected override object VisitNumberToken(ParseTreeNode node)
+        {
+            return node.Token.Value;
+        }
+
+        protected override object VisitNameToken(ParseTreeNode node)
+        {
+            return Index.Parse((string)node.Token.Value);
         }
 
         private object Evaluate(object source)
