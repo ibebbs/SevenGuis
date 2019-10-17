@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="024dec42-0796-4ec1-ab49-af443f6ef011"
-    Publisher="CN=ibebb"
+    Name="1a896fd1-c1e5-4a35-8b71-0dd48e0d2dad"
+    Publisher="CN=com.example"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="024dec42-0796-4ec1-ab49-af443f6ef011" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="a1484768-a6f0-4b3c-9234-b9fbe9d47531" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Crud</DisplayName>
-    <PublisherDisplayName>ibebb</PublisherDisplayName>
+    <PublisherDisplayName>Crud</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -29,7 +29,7 @@
 
   <Applications>
     <Application Id="App"
-      Executable="$targetnametoken$.exe"
+      Executable="Crud.exe"
       EntryPoint="Crud.App">
       <uap:VisualElements
         DisplayName="Crud"
