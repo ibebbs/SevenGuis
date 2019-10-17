@@ -54,7 +54,8 @@ namespace Cells.Common.Tests.Spreadsheet.Expression
         [TestCaseSource(nameof(DependencyTestCases))]
         public IEnumerable<Common.Spreadsheet.Index> ReturnTheExpectedDependencies(string expression)
         {
-            return Common.Spreadsheet.Expression.Dependencies.For(expression);
+            var subject = new Common.Spreadsheet.Expression.Dependencies();
+            return subject.For(expression);
         }
     }
 }

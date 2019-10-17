@@ -10,7 +10,7 @@ namespace Cells.Common.Spreadsheet
             Text = text;
             Content = content;
 
-            Dependencies = Expression.Dependencies.For(text);
+            Dependencies = Expression.Dependencies.Instance.For(text);
         }
 
         public Index Index { get; }

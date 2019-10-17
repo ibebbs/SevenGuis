@@ -1,6 +1,4 @@
-﻿using Cells.Common.Spreadsheet.Expression;
-using Crux;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -10,9 +8,10 @@ namespace Cells.Common.Spreadsheet
 {
     public class Sheet : IDisposable
     {
-        private readonly IBus _bus;
+        private readonly Crux.IBus _bus;
         private readonly Dictionary<Index, Cell> _cells;
-        private readonly Evaluator _expressionEvaluator;
+        private readonly Expression.Evaluator _expressionEvaluator;
+        private readonly Expression.Dependencies _expressionDependencies;
 
         private IDisposable _behaviours;
 
@@ -21,6 +20,7 @@ namespace Cells.Common.Spreadsheet
             _bus = bus;
             _cells = new Dictionary<Index, Cell>();
             _expressionEvaluator = new Expression.Evaluator(Lookup);
+            _expressionDependencies = new Expression.Dependencies();
 
             _behaviours = new CompositeDisposable(
                 ShouldRecalculateDependentCellsWhenTextChanges()
