@@ -1,14 +1,58 @@
-﻿using Irony.Parsing;
+﻿using Bebbs.Monads;
+using Irony.Parsing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using XLParser;
 
 namespace Cells.Common.Spreadsheet.Expression
 {
     public class Evaluator
     {
+        public static readonly string InvalidReference = "#ref";
+        public static readonly string InvalidValue = "#value";
+
+        public enum Operation
+        {
+            Add,
+            Subtract,
+            Multiply,
+            Divide
+        }
+
+        private static readonly IEnumerable<(int, Type)> TypePrecidence = new (int, Type)[]
+        {
+            (0, typeof(string)),
+            (1, typeof(double)),
+            (2, typeof(float)),
+            (3, typeof(decimal)),
+            (4, typeof(int))
+        };
+
+        private static readonly IEnumerable<(Type, Operation, Func<object, object, object>)> Operations = new (Type, Operation, Func<object, object, object>)[]
+        {
+            (typeof(Int32), Operation.Add, (x, y) => Convert.ToInt32(x ?? default) + Convert.ToInt32(y ?? default)),
+            (typeof(Decimal), Operation.Add, (x, y) => Convert.ToDecimal(x ?? default) + Convert.ToDecimal(y ?? default)),
+            (typeof(Single), Operation.Add, (x, y) => Convert.ToSingle(x ?? default) + Convert.ToSingle(y ?? default)),
+            (typeof(Double), Operation.Add, (x, y) => Convert.ToDouble(x ?? default) + Convert.ToDouble(y ?? default)),
+
+            (typeof(Int32), Operation.Subtract, (x, y) => Convert.ToInt32(x ?? default) - Convert.ToInt32(y ?? default)),
+            (typeof(Decimal), Operation.Subtract, (x, y) => Convert.ToDecimal(x ?? default) - Convert.ToDecimal(y ?? default)),
+            (typeof(Single), Operation.Subtract, (x, y) => Convert.ToSingle(x ?? default) - Convert.ToSingle(y ?? default)),
+            (typeof(Double), Operation.Subtract, (x, y) => Convert.ToDouble(x ?? default) - Convert.ToDouble(y ?? default)),
+
+            (typeof(Int32), Operation.Multiply, (x, y) => Convert.ToInt32(x ?? default) * Convert.ToInt32(y ?? default)),
+            (typeof(Decimal), Operation.Multiply, (x, y) => Convert.ToDecimal(x ?? default) * Convert.ToDecimal(y ?? default)),
+            (typeof(Single), Operation.Multiply, (x, y) => Convert.ToSingle(x ?? default) * Convert.ToSingle(y ?? default)),
+            (typeof(Double), Operation.Multiply, (x, y) => Convert.ToDouble(x ?? default) * Convert.ToDouble(y ?? default)),
+
+            (typeof(Int32), Operation.Divide, (x, y) => Convert.ToInt32(x ?? default) / Convert.ToInt32(y ?? default)),
+            (typeof(Decimal), Operation.Divide, (x, y) => Convert.ToDecimal(x ?? default) / Convert.ToDecimal(y ?? default)),
+            (typeof(Single), Operation.Divide, (x, y) => Convert.ToSingle(x ?? default) / Convert.ToSingle(y ?? default)),
+            (typeof(Double), Operation.Divide, (x, y) => Convert.ToDouble(x ?? default) / Convert.ToDouble(y ?? default)), // TODO: Address potential divide by zero
+        };
+
         private static readonly IEnumerable<(Type, int, Func<IEnumerable<object>, object>)> SumTypes = new[]
         {
             (typeof(string), 0, new Func<IEnumerable<object>, object>(args => "#ref")),
@@ -27,7 +71,7 @@ namespace Cells.Common.Spreadsheet.Expression
 
         private object VisitFormula(ParseTreeNode node)
         {
-            return Visit(node.ChildNodes[0]);
+            return Evaluate(Visit(node.ChildNodes[0]));
         }
 
         private object VisitConstant(ParseTreeNode node)
@@ -105,67 +149,37 @@ namespace Cells.Common.Spreadsheet.Expression
             return Index.Parse((string)node.Token.Value);
         }
 
-        private object Add(ParseTreeNode leftNode, ParseTreeNode rightNode)
+        private Type GetMostAppropriateType(params object[] values)
+        {
+            return values
+                .Where(value => value != null)
+                .Select(value => value.GetType())
+                .Distinct()
+                .Join(TypePrecidence, type => type, tuple => tuple.Item2, (type, tuple) => tuple)
+                .OrderBy(tuple => tuple.Item1)
+                .Select(tuple => tuple.Item2)
+                .FirstOrDefault();
+        }
+
+        private object VisitOperation(ParseTreeNode leftNode, ParseTreeNode rightNode, Operation operation)
         {
             var leftValue = Evaluate(Visit(leftNode));
             var rightValue = Evaluate(Visit(rightNode));
 
-            switch (leftValue)
-            {
-                case Int32 left when rightValue is Int32: return left + Convert.ToInt32(rightValue);
-                case decimal left: return left + Convert.ToDecimal(rightValue);
-                case float left: return left + Convert.ToSingle(rightValue);
-                case double left: return left + Convert.ToDouble(rightValue);
-                default: throw new InvalidOperationException();
-            }
+            var type = GetMostAppropriateType(leftValue, rightValue);
+
+            var op = (type == null)
+                ? (x, y) => InvalidValue
+                : Operations
+                    .Where(o => o.Item1.Equals(type) && o.Item2.Equals(operation))
+                    .Select(o => o.Item3)
+                    .FirstOption()
+                    .Coalesce(() => (x, y) => null);
+
+            return op(leftValue, rightValue);
         }
 
-        private object Subtract(ParseTreeNode leftNode, ParseTreeNode rightNode)
-        {
-            var leftValue = Evaluate(Visit(leftNode));
-            var rightValue = Evaluate(Visit(rightNode));
-
-            switch (leftValue)
-            {
-                case Int32 left when rightValue is Int32: return left - Convert.ToInt32(rightValue);
-                case decimal left: return left - Convert.ToDecimal(rightValue);
-                case float left: return left - Convert.ToSingle(rightValue);
-                case double left: return left - Convert.ToDouble(rightValue);
-                default: throw new InvalidOperationException();
-            }
-        }
-
-        private object Multiply(ParseTreeNode leftNode, ParseTreeNode rightNode)
-        {
-            var leftValue = Evaluate(Visit(leftNode));
-            var rightValue = Evaluate(Visit(rightNode));
-
-            switch (leftValue)
-            {
-                case Int32 left when rightValue is Int32: return left * Convert.ToInt32(rightValue);
-                case decimal left: return left * Convert.ToDecimal(rightValue);
-                case float left: return left * Convert.ToSingle(rightValue);
-                case double left: return left * Convert.ToDouble(rightValue);
-                default: throw new InvalidOperationException();
-            }
-        }
-
-        private object Divide(ParseTreeNode leftNode, ParseTreeNode rightNode)
-        {
-            var leftValue = Evaluate((Index)Visit(leftNode));
-            var rightValue = Evaluate((Index)Visit(rightNode));
-
-            switch (leftValue)
-            {
-                case Int32 left when rightValue is Int32: return left / Convert.ToInt32(rightValue);
-                case decimal left: return left / Convert.ToDecimal(rightValue);
-                case float left: return left / Convert.ToSingle(rightValue);
-                case double left: return left / Convert.ToDouble(rightValue);
-                default: throw new InvalidOperationException();
-            }
-        }
-
-        private object Sum(ParseTreeNode argumentsNode)
+        private object VisitSum(ParseTreeNode argumentsNode)
         {
             var arguments = Visit(argumentsNode) as object[];
             var values = arguments[0] as IEnumerable<object>;
@@ -179,13 +193,13 @@ namespace Cells.Common.Spreadsheet.Expression
                     .Join(SumTypes, type => type, tuple => tuple.Item1, (type, tuple) => tuple)
                     .OrderBy(tuple => tuple.Item2)
                     .Select(tuple => tuple.Item3)
-                    .FirstOrDefault() ?? new Func<IEnumerable<object>, object>(args => "#ref");
+                    .FirstOrDefault() ?? new Func<IEnumerable<object>, object>(args => InvalidReference);
 
                 return sum(values);
             }
             else
             {
-                return "#ref";
+                return InvalidReference;
             }
         }
 
@@ -195,11 +209,11 @@ namespace Cells.Common.Spreadsheet.Expression
 
             switch (function)
             {
-                case "+": return Add(node.ChildNodes[0], node.ChildNodes[2]);
-                case "-": return Subtract(node.ChildNodes[0], node.ChildNodes[2]);
-                case "*": return Multiply(node.ChildNodes[0], node.ChildNodes[2]);
-                case "/": return Divide(node.ChildNodes[0], node.ChildNodes[2]);
-                case "SUM": return Sum(node.ChildNodes[1]);
+                case "+": return VisitOperation(node.ChildNodes[0], node.ChildNodes[2], Operation.Add);
+                case "-": return VisitOperation(node.ChildNodes[0], node.ChildNodes[2], Operation.Subtract);
+                case "*": return VisitOperation(node.ChildNodes[0], node.ChildNodes[2], Operation.Multiply);
+                case "/": return VisitOperation(node.ChildNodes[0], node.ChildNodes[2], Operation.Divide);
+                case "SUM": return VisitSum(node.ChildNodes[1]);
 
                 default: throw new ArgumentException("node");
             }

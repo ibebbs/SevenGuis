@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cells.Common.Spreadsheet.Expression
 {
-    public static class Visitor
+    public static class Visitor<T>
     {
     }
 }
