@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;__WPF__</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TemperatureConverter.Common\TemperatureConverter.Common.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\TemperatureConverter.Shared\TemperatureConverter.Shared.projitems" Label="Shared" />
+
+</Project>

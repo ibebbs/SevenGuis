@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2A8B4ED3-B7C9-4AE6-8B55-585C934AC8B7}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Timer.Droid</RootNamespace>
+    <AssemblyName>Timer.Droid</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidApplication>true</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <!-- AndroidUseAapt2 is disabled until https://github.com/unoplatform/uno/issues/1382 is resolved -->
+    <AndroidUseAapt2>false</AndroidUseAapt2>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidUseIntermediateDesignerFile>True</AndroidUseIntermediateDesignerFile>
+    <ResourcesDirectory>..\Timer.Shared\Strings</ResourcesDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AotAssemblies>true</AotAssemblies>
+    <EnableLLVM>true</EnableLLVM>
+    <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Reactive">
+      <Version>4.1.6</Version>
+    </PackageReference>
+    <PackageReference Include="Uno.UI" Version="1.45.0" />
+    <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Main.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\winjs-symbols.ttf" />
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Timer.Common\Timer.Common.csproj">
+      <Project>{de898f2f-d8bb-441f-875b-2ce6d1aa1131}</Project>
+      <Name>Timer.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="..\Timer.Shared\Timer.Shared.projitems" Label="Shared" Condition="Exists('..\Timer.Shared\Timer.Shared.projitems')" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- This will force the generation of the APK when not buildig inside visual studio -->
+  <Target Name="GenerateBuild" DependsOnTargets="SignAndroidPackage" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)'==''" />
+</Project>

@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="TemperatureConverter.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TemperatureConverter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+  <Page.Resources>
+    <local:StringToIntConverter x:Key="StringToIntConverter" />
+  </Page.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Grid.Row="0" Text="Celcius" Margin="4" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="1" Text="{Binding Celcius, Converter={StaticResource StringToIntConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="4"/>
+            <TextBlock Grid.Row="2" Text="=" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Text="Fahrenheit" Margin="4"  HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="4" Text="{Binding Fahrenheit, Converter={StaticResource StringToIntConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="4"/>
+        </StackPanel>
+    </Grid>
+</Page>
