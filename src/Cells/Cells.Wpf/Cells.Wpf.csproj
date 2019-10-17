@@ -10,8 +10,6 @@
     <DefineConstants>TRACE;__WPF__</DefineConstants>
   </PropertyGroup>
 
-  <Import Project="..\Cells.Common.Shared\Cells.Common.Shared.projitems" Label="Shared" />
-
   <ItemGroup>
     <ProjectReference Include="..\Cells.Common\Cells.Common.csproj" />
   </ItemGroup>

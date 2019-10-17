@@ -13,13 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Counter.UWP", "Counter\Coun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Counter.Wasm", "Counter\Counter.Wasm\Counter.Wasm.csproj", "{3F245CA0-826B-411C-A26C-CB428829DAD1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Counter", "Counter", "{F7AB5BC0-A56D-4BC2-BDE4-B8DB26403AB8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Counter", "1 - Counter", "{F7AB5BC0-A56D-4BC2-BDE4-B8DB26403AB8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Counter.Common", "Counter\Counter.Common\Counter.Common.csproj", "{79650030-06F5-4760-9954-0975EB42F4F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Counter.Wpf", "Counter\Counter.Wpf\Counter.Wpf.csproj", "{94E093C7-C6C9-4910-B70D-E2B24DCE3AA8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timer", "Timer", "{0ABA68D0-CF30-4883-8308-6DB748D4EF74}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Timer", "4 - Timer", "{0ABA68D0-CF30-4883-8308-6DB748D4EF74}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Timer.Shared", "Timer\Timer.Shared\Timer.Shared.shproj", "{07B13FF4-22B6-46E9-9BC1-CCD8ECCC87A2}"
 EndProject
@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timer.Common", "Timer\Timer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timer.Wpf", "Timer\Timer.Wpf\Timer.Wpf.csproj", "{345EAEA8-BB17-4F27-8906-8BD78319E73D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TemperatureConverter", "TemperatureConverter", "{40013916-2534-44B5-96A3-5D4B89510951}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - TemperatureConverter", "2 - TemperatureConverter", "{40013916-2534-44B5-96A3-5D4B89510951}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TemperatureConverter.Shared", "TemperatureConverter\TemperatureConverter.Shared\TemperatureConverter.Shared.shproj", "{D75752C6-5D5D-4749-ABC4-CFB08421B430}"
 EndProject
@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemperatureConverter.Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemperatureConverter.Wpf", "TemperatureConverter\TemperatureConverter.Wpf\TemperatureConverter.Wpf.csproj", "{685A6D13-753B-4BB5-8C7A-4987E37F6A05}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FlightBooker", "FlightBooker", "{3EBDF89A-ADE6-4260-A669-16FFBA3D222F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - FlightBooker", "3 - FlightBooker", "{3EBDF89A-ADE6-4260-A669-16FFBA3D222F}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlightBooker.Shared", "FlightBooker\FlightBooker.Shared\FlightBooker.Shared.shproj", "{816B01FA-583D-4901-A4CA-429E149C27E6}"
 EndProject
@@ -67,7 +67,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightBooker.Common", "Flig
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightBooker.Wpf", "FlightBooker\FlightBooker.Wpf\FlightBooker.Wpf.csproj", "{57DB7799-1767-4CAA-8351-DA5C4083BA92}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CircleDrawer", "CircleDrawer", "{4FC00F35-FBD0-4821-B00D-42CB7F4BDED4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - CircleDrawer", "6 - CircleDrawer", "{4FC00F35-FBD0-4821-B00D-42CB7F4BDED4}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CircleDrawer.Shared", "CircleDrawer\CircleDrawer.Shared\CircleDrawer.Shared.shproj", "{46C2495D-6F01-48E6-8204-6B4C1DC3B259}"
 EndProject
@@ -93,13 +93,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.UWP", "Crud\Crud.UWP\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crud.Wasm", "Crud\Crud.Wasm\Crud.Wasm.csproj", "{A80C3E91-E6B1-460B-8BB2-71FEADFF2B89}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Crud", "Crud", "{26C7C0F9-DB67-4CF7-B820-253FCC3346F3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Crud", "5 - Crud", "{26C7C0F9-DB67-4CF7-B820-253FCC3346F3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crud.Common", "Crud\Crud.Common\Crud.Common.csproj", "{99C36B98-E8ED-4722-A278-0C31FFD50A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.Wpf", "Crud\Crud.Wpf\Crud.Wpf.csproj", "{D00401C2-EFFD-4058-BAAB-EF0C4C08A5CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crud.Wpf", "Crud\Crud.Wpf\Crud.Wpf.csproj", "{D00401C2-EFFD-4058-BAAB-EF0C4C08A5CA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cells", "Cells", "{CADEFE2E-09EB-4767-B83F-4159428C0812}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7 - Cells", "7 - Cells", "{CADEFE2E-09EB-4767-B83F-4159428C0812}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Cells.Shared", "Cells\Cells.Shared\Cells.Shared.shproj", "{6E0C9A94-C678-4BD9-8A6F-85289EA8BBDE}"
 EndProject
@@ -115,7 +115,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cells.Common", "Cells\Cells
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cells.Common.Tests", "Cells\Cells.Common.Tests\Cells.Common.Tests.csproj", "{AB8AA375-A20C-421E-B29A-F5ED8BD7FB43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cells.Wpf", "Cells\Cells.Wpf\Cells.Wpf.csproj", "{81FFB7F4-2A6C-40D6-837A-3B2AECB5FBEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cells.Wpf", "Cells\Cells.Wpf\Cells.Wpf.csproj", "{81FFB7F4-2A6C-40D6-837A-3B2AECB5FBEA}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
