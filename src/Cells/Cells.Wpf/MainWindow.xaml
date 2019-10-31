@@ -15,7 +15,7 @@
             <TextBlock Text="{Binding RelativeSource={RelativeSource Self}, Path=(local:DataGridCellColumn.Cell).Content}" />
         </DataTemplate>
         <DataTemplate x:Key="cellEditingTemplate">
-            <TextBox Text="{Binding RelativeSource={RelativeSource Self}, Path=(local:DataGridCellColumn.Cell).Text, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+            <TextBox Text="{Binding RelativeSource={RelativeSource Self}, Path=(local:DataGridCellColumn.Cell).Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </DataTemplate>
     </Window.Resources>
     <Grid>

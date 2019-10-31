@@ -12,7 +12,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
-    <PackageReference Include="Uno.Core" Version="1.29.0-dev.93" />
+    <PackageReference Include="Uno.Core" Version="1.29.0-dev.100" />
     <PackageReference Include="Uno.Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
       <Version>5.1.0-build.200.gf9c311b069</Version>
     </PackageReference>
