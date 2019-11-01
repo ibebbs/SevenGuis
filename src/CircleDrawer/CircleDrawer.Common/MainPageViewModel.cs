@@ -26,7 +26,7 @@ namespace CircleDrawer
         {
             _circles = new Crux.Property<IEnumerable<Circle>>(nameof(Circles), args => PropertyChanged?.Invoke(this, args));
             _selected = new Crux.Property<Circle>(nameof(Selected), args => PropertyChanged?.Invoke(this, args));
-            _adjustDiameter = new Crux.Command(true);
+            _adjustDiameter = new Crux.Command();
             _undo = new Crux.Command();
             _redo = new Crux.Command();
         }
@@ -71,6 +71,13 @@ namespace CircleDrawer
                 .Subscribe(_undo);
         }
 
+        private IDisposable ShouldEnableOrDisableAdjustDiameterBasedOnSelectedItem()
+        {
+            return _selected
+                .Select(selected => selected != null)
+                .Subscribe(_adjustDiameter);
+        }
+
         private IDisposable ShouldEnableOrDisableUndoBasedOnState(IObservable<Domain.IState> state)
         {
             return state
@@ -105,6 +112,7 @@ namespace CircleDrawer
                 ShouldPopulateCirclesFromState(state),
                 ShouldEnableOrDisableUndoBasedOnState(state),
                 ShouldEnableOrDisableRedoBasedOnState(state),
+                ShouldEnableOrDisableAdjustDiameterBasedOnSelectedItem(),
                 ShouldSetSelectedFromState(state),
                 ShouldShowAdjustDiameterDialogWhenAdjustDiameterInvoked(showAdjustDiameterDialog)
             );

@@ -103,7 +103,8 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Undo" Command="{Binding Undo}" Margin="4"/>
             <Button Content="Redo" Command="{Binding Redo}" Margin="4"/>
-            <TextBlock x:Name="DebugText" Text="None"/>
+            <Button Content="Adjust" Command="{Binding AdjustDiameter}" Margin="4"/>
+            <TextBlock x:Name="DebugText" Text="None" Visibility="Collapsed"/>
         </StackPanel>
         <ListView x:Name="CirclesContainer" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemsPanel>
@@ -112,8 +113,8 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
-        <Popup x:Name="AdjustDiameterDialog" IsLightDismissEnabled="True">
-            <Grid Grid.Row="2" Background="LightGray" HorizontalAlignment="Stretch" Padding="10" Width="{Binding ElementName=ContextRoot, Path=ActualWidth}">
+        <Popup x:Name="AdjustDiameterDialog" Grid.Row="0" Grid.RowSpan="2" IsLightDismissEnabled="True">
+            <Grid x:Name="AdjustDiameterGrid" Grid.Row="2" Background="LightGray" HorizontalAlignment="Stretch" Padding="10" DataContext="{Binding ElementName=ContextRoot, Path=DataContext}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
