@@ -9,16 +9,23 @@
 
     <Page.Resources>
         <local:CircleDescriptorToCanvasCoordinatesConverter x:Key="CircleOriginToCanvasCoordinatesConverter"/>
-        <Style x:Key="CircleContainerStyle" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="Transparent"/>
+        <Style x:Key="CircleContainerStyle" TargetType="ListViewItem">
             <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="False"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="AllowDrop" Value="False"/>
             <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="0"/>
+            <Setter Property="FocusVisualPrimaryThickness" Value="2"/>
+            <Setter Property="FocusVisualSecondaryThickness" Value="1"/>
             <Setter Property="local:CanvasBindingHelper.EnableCanvasPositioning" Value="True"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
+                    <ControlTemplate TargetType="ListViewItem">
                         <Grid x:Name="LayoutRoot">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -33,14 +40,14 @@
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="LightGray"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="LightGray"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -74,8 +81,8 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Ellipse x:Name="OuterEllipse" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="1" Stroke="Black" UseLayoutRounding="False"/>
-                            <Ellipse x:Name="CheckEllipse" RightTapped="RadioButton_RightTapped" Fill="LightGray" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="1" Stroke="Transparent" UseLayoutRounding="False">
+                            <Ellipse x:Name="OuterEllipse" Fill="White" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="1" Stroke="Black" UseLayoutRounding="False"/>
+                            <Ellipse x:Name="CheckEllipse" RightTapped="RadioButton_RightTapped" Fill="LightGray" Width="{Binding Diameter}" Height="{Binding Diameter}" StrokeThickness="0" Stroke="Transparent" UseLayoutRounding="False">
                                 <FlyoutBase.AttachedFlyout>
                                     <MenuFlyout>
                                         <MenuFlyoutItem Text="Adjust diameter..." Command="{Binding ElementName=ContextRoot, Path=DataContext.AdjustDiameter}" CommandParameter="{Binding}"/>
@@ -97,13 +104,16 @@
             <Button Content="Undo" Command="{Binding Undo}" Margin="4"/>
             <Button Content="Redo" Command="{Binding Redo}" Margin="4"/>
         </StackPanel>
-        <ListBox x:Name="CirclesContainer" Background="LightBlue" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <ListBox.ItemsPanel>
+        <ListView x:Name="CirclesContainer" Background="White" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection/>
+            </ListView.ItemContainerTransitions>
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas  />
+                    <Canvas />
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
+            </ListView.ItemsPanel>
+        </ListView>
         <Popup x:Name="AdjustDiameterDialog" IsLightDismissEnabled="True">
             <Grid Grid.Row="2" HorizontalAlignment="Stretch" Padding="10" Width="{Binding ElementName=ContextRoot, Path=ActualWidth}">
                 <Grid.RowDefinitions>
