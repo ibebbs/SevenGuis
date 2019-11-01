@@ -9,16 +9,29 @@
 
     <Page.Resources>
         <local:CircleDescriptorToCanvasCoordinatesConverter x:Key="CircleOriginToCanvasCoordinatesConverter"/>
-        <Style x:Key="CircleContainerStyle" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="Transparent"/>
+        <Style x:Key="CircleContainerStyle" TargetType="ListViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="{ThemeResource ListViewItemBackground}"/>
+            <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}"/>
             <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="False"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="AllowDrop" Value="False"/>
             <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="0"/>
+            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}"/>
+            <Setter Property="FocusVisualPrimaryThickness" Value="2"/>
+            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}"/>
+            <Setter Property="FocusVisualSecondaryThickness" Value="1"/>
             <Setter Property="local:CanvasBindingHelper.EnableCanvasPositioning" Value="True"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
+                    <ControlTemplate TargetType="ListViewItem">
                         <Grid x:Name="LayoutRoot">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -97,16 +110,19 @@
             <Button Content="Undo" Command="{Binding Undo}" Margin="4"/>
             <Button Content="Redo" Command="{Binding Redo}" Margin="4"/>
         </StackPanel>
-        <ListBox x:Name="CirclesContainer" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <ListBox.ItemsPanel>
+        <ListView x:Name="CirclesContainer" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection/>
+            </ListView.ItemContainerTransitions>
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
                 <DataTemplate/>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ItemTemplate>
+        </ListView>
         <Popup x:Name="AdjustDiameterDialog" IsLightDismissEnabled="True">
             <Grid Grid.Row="2" Background="{ThemeResource ContentDialogBackgroundThemeBrush}" HorizontalAlignment="Stretch" Padding="10" Width="{Binding ElementName=ContextRoot, Path=ActualWidth}">
                 <Grid.RowDefinitions>

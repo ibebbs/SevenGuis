@@ -109,7 +109,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cells.iOS", "Cells\Cells.iO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cells.UWP", "Cells\Cells.UWP\Cells.UWP.csproj", "{C08D9A50-BEEC-41FF-9686-E969993C58DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cells.Wasm", "Cells\Cells.Wasm\Cells.Wasm.csproj", "{E03FA6A3-352A-4315-9959-52A958AB3D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cells.Wasm", "Cells\Cells.Wasm\Cells.Wasm.csproj", "{E03FA6A3-352A-4315-9959-52A958AB3D28}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cells.Common", "Cells\Cells.Common\Cells.Common.csproj", "{56FA5DEA-4955-467D-9C80-AEC67289ECB4}"
 EndProject
@@ -123,16 +123,24 @@ Global
 		Timer\Timer.Shared\Timer.Shared.projitems*{07b13ff4-22b6-46e9-9bc1-ccd8eccc87a2}*SharedItemsImports = 13
 		Crud\Crud.Shared\Crud.Shared.projitems*{1a896fd1-c1e5-4a35-8b71-0dd48e0d2dad}*SharedItemsImports = 4
 		CircleDrawer\CircleDrawer.Shared\CircleDrawer.Shared.projitems*{1fdca6eb-421d-426e-8bce-ff715020d1d7}*SharedItemsImports = 4
+		Timer\Timer.Shared\Timer.Shared.projitems*{2a8b4ed3-b7c9-4ae6-8b55-585c934ac8b7}*SharedItemsImports = 4
+		TemperatureConverter\TemperatureConverter.Shared\TemperatureConverter.Shared.projitems*{3c461371-3e2c-4c1f-91c3-a40443185c6e}*SharedItemsImports = 4
 		Counter\Counter.Shared\Counter.Shared.projitems*{418c80c6-f373-4f87-82d9-4df99e268107}*SharedItemsImports = 4
 		FlightBooker\FlightBooker.Shared\FlightBooker.Shared.projitems*{42b6715b-85c1-4c73-aafe-ba83eeb1ecd9}*SharedItemsImports = 4
 		CircleDrawer\CircleDrawer.Shared\CircleDrawer.Shared.projitems*{46c2495d-6f01-48e6-8204-6b4c1dc3b259}*SharedItemsImports = 13
+		CircleDrawer\CircleDrawer.Shared\CircleDrawer.Shared.projitems*{5a1196fc-4c10-42d0-81f6-9c5856e4bf8d}*SharedItemsImports = 4
+		Cells\Cells.Shared\Cells.Shared.projitems*{5ccd15cb-a7e9-4fd2-990e-805a7c5a93f8}*SharedItemsImports = 4
 		Counter\Counter.Shared\Counter.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
 		Crud\Crud.Shared\Crud.Shared.projitems*{65e38e28-c601-4b79-88a8-e5647925d39e}*SharedItemsImports = 13
 		Cells\Cells.Shared\Cells.Shared.projitems*{6e0c9a94-c678-4bd9-8a6f-85289ea8bbde}*SharedItemsImports = 13
+		Counter\Counter.Shared\Counter.Shared.projitems*{798676e0-0fe1-44a9-afc5-6a1eb4468942}*SharedItemsImports = 4
 		FlightBooker\FlightBooker.Shared\FlightBooker.Shared.projitems*{816b01fa-583d-4901-a4ca-429e149c27e6}*SharedItemsImports = 13
+		FlightBooker\FlightBooker.Shared\FlightBooker.Shared.projitems*{9ecaeb25-e878-4dbc-8eaf-c7bfac5786f1}*SharedItemsImports = 4
+		Cells\Cells.Shared\Cells.Shared.projitems*{a4c6c505-d108-4dc6-a257-4e06f2cec51d}*SharedItemsImports = 4
 		TemperatureConverter\TemperatureConverter.Shared\TemperatureConverter.Shared.projitems*{aa8be35f-e131-46b4-930d-68e09cac033e}*SharedItemsImports = 4
 		Cells\Cells.Shared\Cells.Shared.projitems*{c08d9a50-beec-41ff-9686-e969993c58dc}*SharedItemsImports = 4
 		TemperatureConverter\TemperatureConverter.Shared\TemperatureConverter.Shared.projitems*{d75752c6-5d5d-4749-abc4-cfb08421b430}*SharedItemsImports = 13
+		Crud\Crud.Shared\Crud.Shared.projitems*{ef1af3a6-857f-4ea6-ba58-068ed7a69a64}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -341,6 +349,7 @@ Global
 		{418C80C6-F373-4F87-82D9-4DF99E268107}.Debug|x64.Deploy.0 = Debug|x64
 		{418C80C6-F373-4F87-82D9-4DF99E268107}.Debug|x86.ActiveCfg = Debug|x86
 		{418C80C6-F373-4F87-82D9-4DF99E268107}.Debug|x86.Build.0 = Debug|x86
+		{418C80C6-F373-4F87-82D9-4DF99E268107}.Debug|x86.Deploy.0 = Debug|x86
 		{418C80C6-F373-4F87-82D9-4DF99E268107}.Release|Any CPU.ActiveCfg = Release|x86
 		{418C80C6-F373-4F87-82D9-4DF99E268107}.Release|ARM.ActiveCfg = Release|ARM
 		{418C80C6-F373-4F87-82D9-4DF99E268107}.Release|ARM.Build.0 = Release|ARM
@@ -698,6 +707,7 @@ Global
 		{02A7BEC6-84DC-4E7D-856E-5E700D4E89DE}.Debug|x64.Deploy.0 = Debug|x64
 		{02A7BEC6-84DC-4E7D-856E-5E700D4E89DE}.Debug|x86.ActiveCfg = Debug|x86
 		{02A7BEC6-84DC-4E7D-856E-5E700D4E89DE}.Debug|x86.Build.0 = Debug|x86
+		{02A7BEC6-84DC-4E7D-856E-5E700D4E89DE}.Debug|x86.Deploy.0 = Debug|x86
 		{02A7BEC6-84DC-4E7D-856E-5E700D4E89DE}.Release|Any CPU.ActiveCfg = Release|x86
 		{02A7BEC6-84DC-4E7D-856E-5E700D4E89DE}.Release|ARM.ActiveCfg = Release|ARM
 		{02A7BEC6-84DC-4E7D-856E-5E700D4E89DE}.Release|ARM.Build.0 = Release|ARM
@@ -1055,6 +1065,7 @@ Global
 		{AA8BE35F-E131-46B4-930D-68E09CAC033E}.Debug|x64.Deploy.0 = Debug|x64
 		{AA8BE35F-E131-46B4-930D-68E09CAC033E}.Debug|x86.ActiveCfg = Debug|x86
 		{AA8BE35F-E131-46B4-930D-68E09CAC033E}.Debug|x86.Build.0 = Debug|x86
+		{AA8BE35F-E131-46B4-930D-68E09CAC033E}.Debug|x86.Deploy.0 = Debug|x86
 		{AA8BE35F-E131-46B4-930D-68E09CAC033E}.Release|Any CPU.ActiveCfg = Release|x86
 		{AA8BE35F-E131-46B4-930D-68E09CAC033E}.Release|ARM.ActiveCfg = Release|ARM
 		{AA8BE35F-E131-46B4-930D-68E09CAC033E}.Release|ARM.Build.0 = Release|ARM
@@ -1412,6 +1423,7 @@ Global
 		{42B6715B-85C1-4C73-AAFE-BA83EEB1ECD9}.Debug|x64.Deploy.0 = Debug|x64
 		{42B6715B-85C1-4C73-AAFE-BA83EEB1ECD9}.Debug|x86.ActiveCfg = Debug|x86
 		{42B6715B-85C1-4C73-AAFE-BA83EEB1ECD9}.Debug|x86.Build.0 = Debug|x86
+		{42B6715B-85C1-4C73-AAFE-BA83EEB1ECD9}.Debug|x86.Deploy.0 = Debug|x86
 		{42B6715B-85C1-4C73-AAFE-BA83EEB1ECD9}.Release|Any CPU.ActiveCfg = Release|x86
 		{42B6715B-85C1-4C73-AAFE-BA83EEB1ECD9}.Release|ARM.ActiveCfg = Release|ARM
 		{42B6715B-85C1-4C73-AAFE-BA83EEB1ECD9}.Release|ARM.Build.0 = Release|ARM
@@ -1756,6 +1768,8 @@ Global
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.AppStore|x86.Build.0 = Release|x86
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.AppStore|x86.Deploy.0 = Release|x86
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|Any CPU.Build.0 = Debug|x86
+		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|ARM.ActiveCfg = Debug|ARM
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|ARM.Build.0 = Debug|ARM
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -1767,6 +1781,7 @@ Global
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|x64.Deploy.0 = Debug|x64
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|x86.ActiveCfg = Debug|x86
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|x86.Build.0 = Debug|x86
+		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Debug|x86.Deploy.0 = Debug|x86
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Release|Any CPU.ActiveCfg = Release|x86
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Release|ARM.ActiveCfg = Release|ARM
 		{1FDCA6EB-421D-426E-8BCE-FF715020D1D7}.Release|ARM.Build.0 = Release|ARM
@@ -2418,6 +2433,7 @@ Global
 		{A4C6C505-D108-4DC6-A257-4E06F2CEC51D}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{A4C6C505-D108-4DC6-A257-4E06F2CEC51D}.Debug|x64.ActiveCfg = Debug|iPhone
 		{A4C6C505-D108-4DC6-A257-4E06F2CEC51D}.Debug|x86.ActiveCfg = Debug|iPhone
+		{A4C6C505-D108-4DC6-A257-4E06F2CEC51D}.Debug|x86.Build.0 = Debug|iPhone
 		{A4C6C505-D108-4DC6-A257-4E06F2CEC51D}.Release|Any CPU.ActiveCfg = Release|iPhone
 		{A4C6C505-D108-4DC6-A257-4E06F2CEC51D}.Release|ARM.ActiveCfg = Release|iPhone
 		{A4C6C505-D108-4DC6-A257-4E06F2CEC51D}.Release|ARM64.ActiveCfg = Release|iPhone
