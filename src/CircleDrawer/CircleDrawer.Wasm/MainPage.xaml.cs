@@ -25,7 +25,7 @@ namespace CircleDrawer
                 case ListBox listbox:
                     var location = args.GetPosition(listbox);
                     yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
-                    DebugText.Text = $"{args.OriginalSource.GetType().Name}";
+                    DebugText.Text = $"{args.OriginalSource.GetType().Name} @ ({location.X},{location.Y})";
                     break;
             }
         }
