@@ -41,7 +41,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
     <PackageReference Include="System.Reactive" Version="4.1.6" />
     <PackageReference Include="Uno.UI" Version="1.45.0" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.244" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0" />
     <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.244" />
   </ItemGroup>
   <ItemGroup>

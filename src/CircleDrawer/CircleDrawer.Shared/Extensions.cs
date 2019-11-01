@@ -3,6 +3,7 @@ using System.Collections.Generic;
 #if __WPF__
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Controls;
 using System.Windows.Input;
 #else
 using Windows.UI.Xaml.Controls;
