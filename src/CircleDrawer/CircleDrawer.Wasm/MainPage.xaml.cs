@@ -18,22 +18,43 @@ namespace CircleDrawer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private IEnumerable<System.Drawing.Point> GetAreaPoint(TappedRoutedEventArgs args)
-        {
-            switch (args.OriginalSource)
-            {
-                case ListBox listbox:
-                    var location = args.GetPosition(listbox);
-                    yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
-                    DebugText.Text = $"{args.OriginalSource.GetType().Name} @ ({location.X},{location.Y})";
-                    break;
-            }
-        }
-
         private readonly MainPageViewModel _viewModel;
         private readonly IObservable<System.Drawing.Point> _emptyAreaClicked;
         private readonly IObservable<Unit> _adjustDiameterDialogClosed;
         private readonly IObserver<Unit> _showAdjustDiameterDialog;
+
+        public IEnumerable<System.Drawing.Point> GetTappedPoint(TappedRoutedEventArgs args)
+        {
+            switch (args.OriginalSource)
+            {
+                case Canvas canvas:
+                    DebugText.Text = "Clicked Canvas";
+                    var canvasLocation = args.GetPosition(canvas);
+                    DebugText.Text = $"Clicked Canvas @ {canvasLocation}";
+                    return new[] { new System.Drawing.Point(Convert.ToInt32(canvasLocation.X), Convert.ToInt32(canvasLocation.Y)) };
+                case ListView listView:
+                    DebugText.Text = "Clicked ListView";
+                    var itemsPanel = listView.ItemsPanelRoot;
+                    DebugText.Text = $"Clicked ListView ItemsPanelRoot: {itemsPanel?.GetType().Name ?? "Null"}";
+                    var listViewLocation = args.GetPosition(itemsPanel);
+                    DebugText.Text = $"Clicked ListView @ {listViewLocation}";
+                    return new[] { new System.Drawing.Point(Convert.ToInt32(listViewLocation.X), Convert.ToInt32(listViewLocation.Y)) };
+                default: return Enumerable.Empty<System.Drawing.Point>();
+            }
+        }
+
+        public IEnumerable<System.Drawing.Point> HandleGetTappedPoint(TappedRoutedEventArgs args)
+        {
+            try
+            {
+                return GetTappedPoint(args);
+            }
+            catch (Exception e)
+            {
+                DebugText.Text = $"Exception: {e.Message}";
+                throw;
+            }
+        }
 
         public MainPage()
         {
@@ -45,7 +66,9 @@ namespace CircleDrawer
 
             _emptyAreaClicked = Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(handler => CirclesContainer.Tapped += handler, handler => CirclesContainer.Tapped -= handler)
-                .SelectMany(pattern => GetAreaPoint(pattern.EventArgs));
+                .Do(args => DebugText.Text = $"Clicked: {args.EventArgs.OriginalSource.GetType().Name}")
+                .SelectMany(pattern => HandleGetTappedPoint(pattern.EventArgs))
+                .Do(location => DebugText.Text = $"Clicked at {location}");
 
             _adjustDiameterDialogClosed = Observable
                 .FromEventPattern<object>(handler => AdjustDiameterDialog.Closed += handler, handler => AdjustDiameterDialog.Closed -= handler)
@@ -81,6 +104,8 @@ namespace CircleDrawer
 
         private void RadioButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
+            DebugText.Text = $"Right Clicked";
+
             FrameworkElement senderElement = sender as FrameworkElement;
             // If you need the clicked element:
             // Item whichOne = senderElement.DataContext as Item;

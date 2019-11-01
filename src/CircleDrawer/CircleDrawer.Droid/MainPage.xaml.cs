@@ -18,17 +18,6 @@ namespace CircleDrawer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private static IEnumerable<System.Drawing.Point> GetAreaPoint(TappedRoutedEventArgs args)
-        {
-            switch (args.OriginalSource)
-            {
-                case ListBox listbox:
-                    var location = args.GetPosition(listbox);
-                    yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
-                    break;
-            }
-        }
-
         private readonly MainPageViewModel _viewModel;
         private readonly IObservable<System.Drawing.Point> _emptyAreaClicked;
         private readonly IObservable<Unit> _adjustDiameterDialogClosed;
@@ -42,11 +31,9 @@ namespace CircleDrawer
 
             DataContext = _viewModel;
 
-            //CirclesContainer.Tapped += (s, e) => System.Diagnostics.Debugger.Break();
-
             _emptyAreaClicked = Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(handler => CirclesContainer.Tapped += handler, handler => CirclesContainer.Tapped -= handler)
-                .SelectMany(pattern => GetAreaPoint(pattern.EventArgs));
+                .SelectMany(pattern => pattern.EventArgs.GetTappedPoint());
 
             _adjustDiameterDialogClosed = Observable
                 .FromEventPattern<object>(handler => AdjustDiameterDialog.Closed += handler, handler => AdjustDiameterDialog.Closed -= handler)

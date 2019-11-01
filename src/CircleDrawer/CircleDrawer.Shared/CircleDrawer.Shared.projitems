@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasBindingHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CircleDescriptorToCanvasCoordinatesConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConverterBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\LockScreenLogo.scale-200.png" />
