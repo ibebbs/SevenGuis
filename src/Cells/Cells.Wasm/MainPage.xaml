@@ -16,7 +16,7 @@
             <TextBlock Text="{Binding Path=Content}" />
         </DataTemplate>
         <DataTemplate x:Key="cellEditingTemplate">
-            <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+            <TextBox Text="{Binding Path=Text, Mode=TwoWay}" />
         </DataTemplate>
     </Page.Resources>
     <Grid>
