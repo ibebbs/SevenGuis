@@ -11,12 +11,12 @@ namespace Cells.Common
     {
         private static readonly Random Random = new Random();
 
-        private readonly Crux.Bus _bus;
+        private readonly MVx.Observable.Bus _bus;
         private readonly Spreadsheet.Sheet _sheet;
 
         public MainPageViewModel(IScheduler scheduler)
         {
-            _bus = new Crux.Bus();
+            _bus = new MVx.Observable.Bus();
             _sheet = new Spreadsheet.Sheet(_bus);
 
             Rows = Enumerable

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Reactive;
@@ -12,11 +11,11 @@ namespace CircleDrawer
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private readonly Crux.Property<IEnumerable<Circle>> _circles;
-        private readonly Crux.Property<Circle> _selected;
-        private readonly Crux.Command _adjustDiameter;
-        private readonly Crux.Command _undo;
-        private readonly Crux.Command _redo;
+        private readonly MVx.Observable.Property<IEnumerable<Circle>> _circles;
+        private readonly MVx.Observable.Property<Circle> _selected;
+        private readonly MVx.Observable.Command _adjustDiameter;
+        private readonly MVx.Observable.Command _undo;
+        private readonly MVx.Observable.Command _redo;
 
         private IDisposable _behaviours;
 
@@ -24,11 +23,11 @@ namespace CircleDrawer
 
         public MainPageViewModel()
         {
-            _circles = new Crux.Property<IEnumerable<Circle>>(nameof(Circles), args => PropertyChanged?.Invoke(this, args));
-            _selected = new Crux.Property<Circle>(nameof(Selected), args => PropertyChanged?.Invoke(this, args));
-            _adjustDiameter = new Crux.Command();
-            _undo = new Crux.Command();
-            _redo = new Crux.Command();
+            _circles = new MVx.Observable.Property<IEnumerable<Circle>>(nameof(Circles), args => PropertyChanged?.Invoke(this, args));
+            _selected = new MVx.Observable.Property<Circle>(nameof(Selected), args => PropertyChanged?.Invoke(this, args));
+            _adjustDiameter = new MVx.Observable.Command();
+            _undo = new MVx.Observable.Command();
+            _redo = new MVx.Observable.Command();
         }
 
         private IObservable<Domain.ICommand> Commands(IObservable<Point> emptyAreaClicked, IObservable<Unit> adjustDiameterDialogClosed)

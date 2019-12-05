@@ -5,22 +5,20 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Crud
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private readonly Crux.Property<string> _filter;
-        private readonly Crux.Property<string> _name;
-        private readonly Crux.Property<string> _surname;
-        private readonly Crux.Property<IEnumerable<FullName>> _names;
-        private readonly Crux.Property<FullName> _selected;
-        private readonly Crux.Command _create;
-        private readonly Crux.Command _update;
-        private readonly Crux.Command _delete;
+        private readonly MVx.Observable.Property<string> _filter;
+        private readonly MVx.Observable.Property<string> _name;
+        private readonly MVx.Observable.Property<string> _surname;
+        private readonly MVx.Observable.Property<IEnumerable<FullName>> _names;
+        private readonly MVx.Observable.Property<FullName> _selected;
+        private readonly MVx.Observable.Command _create;
+        private readonly MVx.Observable.Command _update;
+        private readonly MVx.Observable.Command _delete;
 
         private readonly BehaviorSubject<IEnumerable<FullName>> _allNames;
         private readonly IObservable<FullName> _fullName;
@@ -32,14 +30,14 @@ namespace Crud
         public MainPageViewModel()
         {
 
-            _filter = new Crux.Property<string>(nameof(Filter), args => PropertyChanged?.Invoke(this, args));
-            _name = new Crux.Property<string>(nameof(Name), args => PropertyChanged?.Invoke(this, args));
-            _surname = new Crux.Property<string>(nameof(Surname), args => PropertyChanged?.Invoke(this, args));
-            _names = new Crux.Property<IEnumerable<FullName>>(nameof(Names), args => PropertyChanged?.Invoke(this, args));
-            _selected = new Crux.Property<FullName>(null, nameof(Selected), args => PropertyChanged?.Invoke(this, args));
-            _create = new Crux.Command();
-            _update = new Crux.Command();
-            _delete = new Crux.Command();
+            _filter = new MVx.Observable.Property<string>(nameof(Filter), args => PropertyChanged?.Invoke(this, args));
+            _name = new MVx.Observable.Property<string>(nameof(Name), args => PropertyChanged?.Invoke(this, args));
+            _surname = new MVx.Observable.Property<string>(nameof(Surname), args => PropertyChanged?.Invoke(this, args));
+            _names = new MVx.Observable.Property<IEnumerable<FullName>>(nameof(Names), args => PropertyChanged?.Invoke(this, args));
+            _selected = new MVx.Observable.Property<FullName>(null, nameof(Selected), args => PropertyChanged?.Invoke(this, args));
+            _create = new MVx.Observable.Command();
+            _update = new MVx.Observable.Command();
+            _delete = new MVx.Observable.Command();
 
             _allNames = new BehaviorSubject<IEnumerable<FullName>>(Enumerable.Empty<FullName>());
             _fullName = Observable

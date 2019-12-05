@@ -8,18 +8,18 @@ namespace Cells.Common
 {
     public class CellViewModel : INotifyPropertyChanged, IDisposable
     {
-        private readonly Crux.IBus _bus;
-        private readonly Crux.Property<object> _content;
+        private readonly MVx.Observable.IBus _bus;
+        private readonly MVx.Observable.Property<object> _content;
         private readonly IScheduler _scheduler;
-        private readonly Crux.Property<string> _text;
+        private readonly MVx.Observable.Property<string> _text;
 
         private IDisposable _subscription;
 
-        public CellViewModel(Crux.IBus bus, int row, char column, IScheduler scheduler)
+        public CellViewModel(MVx.Observable.IBus bus, int row, char column, IScheduler scheduler)
         {
             _bus = bus;
-            _text = new Crux.Property<string>(nameof(Text), args => PropertyChanged?.Invoke(this, args));
-            _content = new Crux.Property<object>(nameof(Content), args => PropertyChanged?.Invoke(this, args));
+            _text = new MVx.Observable.Property<string>(nameof(Text), args => PropertyChanged?.Invoke(this, args));
+            _content = new MVx.Observable.Property<object>(nameof(Content), args => PropertyChanged?.Invoke(this, args));
             _scheduler = scheduler;
 
             Row = row;
