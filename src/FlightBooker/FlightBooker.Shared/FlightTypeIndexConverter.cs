@@ -3,14 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-#if __WPF__
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-#else
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-#endif
 
 namespace FlightBooker
 {
@@ -30,7 +22,7 @@ namespace FlightBooker
             {
                 case FlightType flightType: return (int)flightType;
                 case int i: return (FlightType)i;
-                default: return DependencyProperty.UnsetValue;
+                default: return UnsetValue;
             };
         }
 

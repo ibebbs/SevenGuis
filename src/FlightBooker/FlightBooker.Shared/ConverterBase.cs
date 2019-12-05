@@ -13,6 +13,9 @@ namespace FlightBooker
     public abstract class ConverterBase : IValueConverter
     {
         protected static readonly object UnsetValue = DependencyProperty.UnsetValue;
+        protected static readonly object Visible = Visibility.Visible;
+        protected static readonly object Collapsed = Visibility.Collapsed;
+
 #if __WPF__
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
