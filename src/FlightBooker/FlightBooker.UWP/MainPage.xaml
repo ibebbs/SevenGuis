@@ -7,12 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-  <Page.Resources>
-    <local:EnumBindingConverter x:Key="EnumBindingConverter"/>
-    <local:BooleanToBrushConverter x:Key="HighlightInvalidConverter" TrueColor="White" FalseColor="Red"/>
-  </Page.Resources>
+    <Page.Resources>
+        <local:EnumBindingConverter x:Key="EnumBindingConverter"/>
+        <local:FlightTypeIndexConverter x:Key="FlightTypeIndexConverter"/>
+        <local:BooleanToBrushConverter x:Key="HighlightInvalidConverter" TrueColor="White" FalseColor="Red"/>
+    </Page.Resources>
 
-  <Grid>
+    <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
       <ColumnDefinition Width="Auto" MinWidth="150"/>
@@ -30,7 +31,7 @@
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
-      <ComboBox Grid.Row="0" ItemsSource="{Binding FlightType, Converter={StaticResource EnumBindingConverter}, Mode=OneTime}" SelectedValuePath="Value" DisplayMemberPath="Key" SelectedValue="{Binding FlightType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="4"/>
+            <ComboBox Grid.Row="0" ItemsSource="{Binding FlightType, Converter={StaticResource EnumBindingConverter}, Mode=OneTime}" DisplayMemberPath="Key" SelectedIndex="{Binding FlightType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource FlightTypeIndexConverter}}" HorizontalAlignment="Stretch" Margin="4"/>
       <TextBox Grid.Row="1" Text="{Binding OutboundText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{Binding OutboundValid, Converter={StaticResource HighlightInvalidConverter}}" Margin="4"/>
       <TextBox Grid.Row="2" Text="{Binding ReturnText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{Binding ReturnValid, Converter={StaticResource HighlightInvalidConverter}}" IsEnabled="{Binding ReturnAvailable}" Margin="4"/>
       <Button Grid.Row="3" Content="Book" Command="{Binding Book}" HorizontalAlignment="Stretch" Margin="4"/>
