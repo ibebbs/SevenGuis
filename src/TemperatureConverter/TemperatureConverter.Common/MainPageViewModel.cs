@@ -8,8 +8,8 @@ namespace TemperatureConverter.Common
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private readonly Crux.Property<int> _celcius;
-        private readonly Crux.Property<int> _fahrenheit;
+        private readonly MVx.Observable.Property<int> _celcius;
+        private readonly MVx.Observable.Property<int> _fahrenheit;
 
         private IDisposable _subscription;
 
@@ -17,8 +17,8 @@ namespace TemperatureConverter.Common
 
         public MainPageViewModel()
         {
-            _celcius = new Crux.Property<int>(nameof(Celcius), args => PropertyChanged?.Invoke(this, args));
-            _fahrenheit = new Crux.Property<int>(nameof(Fahrenheit), args => PropertyChanged?.Invoke(this, args));
+            _celcius = new MVx.Observable.Property<int>(nameof(Celcius), args => PropertyChanged?.Invoke(this, args));
+            _fahrenheit = new MVx.Observable.Property<int>(nameof(Fahrenheit), args => PropertyChanged?.Invoke(this, args));
         }
 
         private IDisposable ShouldUpdateFahrenheitWhenCelciusIsChanged()

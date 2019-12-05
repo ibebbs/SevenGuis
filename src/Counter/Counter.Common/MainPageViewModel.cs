@@ -11,15 +11,15 @@ namespace Counter.Common
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly Crux.Property<int> _counter;
-        private readonly Crux.Command _increment;
+        private readonly MVx.Observable.Property<int> _counter;
+        private readonly MVx.Observable.Command _increment;
 
         private IDisposable _subscription;
 
         public MainPageViewModel()
         {
-            _counter = new Crux.Property<int>(nameof(Counter), args => PropertyChanged?.Invoke(this, args));
-            _increment = new Crux.Command(true);
+            _counter = new MVx.Observable.Property<int>(nameof(Counter), args => PropertyChanged?.Invoke(this, args));
+            _increment = new MVx.Observable.Command(true);
         }
 
         private IDisposable CounterShouldBeIncrementedWhenIncrementIsInvoked()

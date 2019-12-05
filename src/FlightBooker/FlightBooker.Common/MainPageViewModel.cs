@@ -10,13 +10,13 @@ namespace FlightBooker.Common
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private readonly Crux.Property<FlightType> _flightType;
-        private readonly Crux.Property<string> _outboundText;
-        private readonly Crux.Property<bool> _outboundValid;
-        private readonly Crux.Property<string> _returnText;
-        private readonly Crux.Property<bool> _returnValid;
-        private readonly Crux.Property<bool> _returnAvailable;
-        private readonly Crux.Command _book;
+        private readonly MVx.Observable.Property<FlightType> _flightType;
+        private readonly MVx.Observable.Property<string> _outboundText;
+        private readonly MVx.Observable.Property<bool> _outboundValid;
+        private readonly MVx.Observable.Property<string> _returnText;
+        private readonly MVx.Observable.Property<bool> _returnValid;
+        private readonly MVx.Observable.Property<bool> _returnAvailable;
+        private readonly MVx.Observable.Command _book;
 
         private readonly IObservable<DateTime?> _outboundDate;
         private readonly IObservable<DateTime?> _returnDate;
@@ -27,13 +27,13 @@ namespace FlightBooker.Common
 
         public MainPageViewModel()
         {
-            _flightType = new Crux.Property<FlightType>(FlightType.OneWay, nameof(FlightType), args => PropertyChanged?.Invoke(this, args));
-            _outboundText = new Crux.Property<string>(DateTime.Now.ToString("d"), nameof(OutboundText), args => PropertyChanged?.Invoke(this, args));
-            _outboundValid = new Crux.Property<bool>(nameof(OutboundValid), args => PropertyChanged?.Invoke(this, args));
-            _returnText = new Crux.Property<string>(DateTime.Now.ToString("d"), nameof(ReturnText), args => PropertyChanged?.Invoke(this, args));
-            _returnValid = new Crux.Property<bool>(nameof(ReturnValid), args => PropertyChanged?.Invoke(this, args));
-            _returnAvailable = new Crux.Property<bool>(false, nameof(ReturnAvailable), args => PropertyChanged?.Invoke(this, args));
-            _book = new Crux.Command();
+            _flightType = new MVx.Observable.Property<FlightType>(FlightType.OneWay, nameof(FlightType), args => PropertyChanged?.Invoke(this, args));
+            _outboundText = new MVx.Observable.Property<string>(DateTime.Now.ToString("d"), nameof(OutboundText), args => PropertyChanged?.Invoke(this, args));
+            _outboundValid = new MVx.Observable.Property<bool>(nameof(OutboundValid), args => PropertyChanged?.Invoke(this, args));
+            _returnText = new MVx.Observable.Property<string>(DateTime.Now.ToString("d"), nameof(ReturnText), args => PropertyChanged?.Invoke(this, args));
+            _returnValid = new MVx.Observable.Property<bool>(nameof(ReturnValid), args => PropertyChanged?.Invoke(this, args));
+            _returnAvailable = new MVx.Observable.Property<bool>(false, nameof(ReturnAvailable), args => PropertyChanged?.Invoke(this, args));
+            _book = new MVx.Observable.Command();
 
             _outboundDate = _outboundText.Select(text => DateTime.TryParseExact(text, "d", Thread.CurrentThread.CurrentUICulture, System.Globalization.DateTimeStyles.None, out DateTime date) ? (DateTime?)date : null);
             _returnDate = _returnText.Select(text => DateTime.TryParseExact(text, "d", Thread.CurrentThread.CurrentUICulture, System.Globalization.DateTimeStyles.None, out DateTime date) ? (DateTime?)date : null);
