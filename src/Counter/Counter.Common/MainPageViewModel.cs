@@ -45,14 +45,8 @@ namespace Counter.Common
             }
         }
 
-        public ICommand Increment
-        {
-            get { return _increment; }
-        }
+        public ICommand Increment => _increment;
 
-        public int Counter
-        {
-            get { return _counter.Get(); }
-        }
+        public int Counter => _counter.Get();
     }
 }
