@@ -117,6 +117,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cells.Common.Tests", "Cells
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cells.Wpf", "Cells\Cells.Wpf\Cells.Wpf.csproj", "{81FFB7F4-2A6C-40D6-837A-3B2AECB5FBEA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "repo", "repo", "{DD38A222-104E-49DB-8E20-80ADC2222682}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE = ..\LICENSE
+		..\ReadMe.md = ..\ReadMe.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Timer\Timer.Shared\Timer.Shared.projitems*{02a7bec6-84dc-4e7d-856e-5e700d4e89de}*SharedItemsImports = 4
