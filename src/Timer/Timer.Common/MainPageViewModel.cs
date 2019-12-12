@@ -39,6 +39,7 @@ namespace Timer.Common
                     .Interval(Interval)
                     .WithLatestFrom(_max, (interval, max) => max)
                     .Scan((long)0, (acc, max) => acc + Interval.Ticks >= max ? max : acc + Interval.Ticks))
+                    .DistinctUntilChanged()
                 .Switch()
                 .ObserveOn(_scheduler)
                 .Subscribe(_elapsed);
