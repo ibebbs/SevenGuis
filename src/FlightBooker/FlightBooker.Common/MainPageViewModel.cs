@@ -60,28 +60,22 @@ namespace FlightBooker.Common
 
         private IDisposable ShouldSetReturnValidWhenReturnDateHasValueOrFlightTypeIsOneWay()
         {
-            return _flightType
-                .Select(flightType => _returnDate.Select(date => new { FlightType = flightType, Date = date }))
-                .Switch()
-                .Select(tuple => tuple.FlightType == FlightType.OneWay || tuple.Date != null)
+            return Observable
+                .CombineLatest(_flightType, _returnDate, (flightType, returnDate) => (FlightType: flightType, ReturnDate: returnDate))
+                .Select(tuple => tuple.FlightType == FlightType.OneWay || tuple.ReturnDate.HasValue)
                 .Subscribe(_returnValid);
         }
 
-        private IDisposable ShouldEnableBookWhenFlightTypeIsOneWayAndOutboundDateIsValid()
+        private bool AreValidDatesForFlightType(FlightType flightType, DateTime? outboundDate, DateTime? returnDate)
         {
-            return _flightType
-                .Select(flightType => flightType == FlightType.OneWay ? _outboundValid : Observable.Never<bool>())
-                .Switch()
-                .Subscribe(_book);
+            return (flightType == FlightType.OneWay && outboundDate.HasValue)
+                || (outboundDate.HasValue && returnDate.HasValue && returnDate.Value >= outboundDate.Value);
         }
 
-        private IDisposable ShouldEnableBookWhenFlightTypeIsReturnAndBothOutboundAndReturnDatesAreValid()
+        private IDisposable ShouldEnableBookWhenDatesAreValidForTheSelectedFlightType()
         {
-            var datesValid = Observable.CombineLatest(_outboundDate, _returnDate).Select(dates => dates.All(date => date.HasValue) && dates[1] >= dates[0]);
-
-            return _flightType
-                .Select(flightType => flightType == FlightType.Return ? datesValid : Observable.Never<bool>())
-                .Switch()
+            return Observable
+                .CombineLatest(_flightType, _outboundDate, _returnDate, AreValidDatesForFlightType)
                 .Subscribe(_book);
         }
 
@@ -116,8 +110,7 @@ namespace FlightBooker.Common
                 ShouldEnableReturnWhenFlightTypeIsReturn(),
                 ShouldSetOutboundValidWhenOutboundDateHasValue(),
                 ShouldSetReturnValidWhenReturnDateHasValueOrFlightTypeIsOneWay(),
-                ShouldEnableBookWhenFlightTypeIsOneWayAndOutboundDateIsValid(),
-                ShouldEnableBookWhenFlightTypeIsReturnAndBothOutboundAndReturnDatesAreValid(),
+                ShouldEnableBookWhenDatesAreValidForTheSelectedFlightType(),
                 ShouldDisplayMessageWhenBookInvoked()
             );
         }
