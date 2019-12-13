@@ -15,9 +15,9 @@ namespace Timer.Common
         public static readonly TimeSpan Interval = TimeSpan.FromMilliseconds(100);
 
         private readonly IScheduler _scheduler;
-        private readonly Crux.Property<long> _max;
-        private readonly Crux.Property<long> _elapsed;
-        private readonly Crux.Command _reset;
+        private readonly MVx.Observable.Property<long> _max;
+        private readonly MVx.Observable.Property<long> _elapsed;
+        private readonly MVx.Observable.Command _reset;
 
         private IDisposable _subscription;
 
@@ -26,9 +26,9 @@ namespace Timer.Common
         public MainPageViewModel(IScheduler scheduler)
         {
             _scheduler = scheduler;
-            _max = new Crux.Property<long>(TimeSpan.FromSeconds(30).Ticks, nameof(MaxTicks), args => PropertyChanged?.Invoke(this, args));
-            _elapsed = new Crux.Property<long>(0, nameof(ElapsedTicks), args => PropertyChanged?.Invoke(this, args));
-            _reset = new Crux.Command(true);
+            _max = new MVx.Observable.Property<long>(TimeSpan.FromSeconds(30).Ticks, nameof(MaxTicks), args => PropertyChanged?.Invoke(this, args));
+            _elapsed = new MVx.Observable.Property<long>(0, nameof(ElapsedTicks), args => PropertyChanged?.Invoke(this, args));
+            _reset = new MVx.Observable.Command(true);
         }
 
         private IDisposable ShouldIncrementElapsedUntilResetOrEqualToMax()
@@ -39,6 +39,7 @@ namespace Timer.Common
                     .Interval(Interval)
                     .WithLatestFrom(_max, (interval, max) => max)
                     .Scan((long)0, (acc, max) => acc + Interval.Ticks >= max ? max : acc + Interval.Ticks))
+                    .DistinctUntilChanged()
                 .Switch()
                 .ObserveOn(_scheduler)
                 .Subscribe(_elapsed);

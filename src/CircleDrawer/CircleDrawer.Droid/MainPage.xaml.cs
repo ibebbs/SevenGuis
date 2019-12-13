@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,6 +19,8 @@ namespace CircleDrawer
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private const int AndroidAppBarHeight = 50;
+
         private readonly MainPageViewModel _viewModel;
         private readonly IObservable<System.Drawing.Point> _emptyAreaClicked;
         private readonly IObservable<Unit> _adjustDiameterDialogClosed;
@@ -46,9 +49,9 @@ namespace CircleDrawer
         {
             if (!AdjustDiameterDialog.IsOpen)
             {
-                //AdjustDiameterDialog.Child.Measure(new Windows.Foundation.Size(Double.PositiveInfinity, Double.PositiveInfinity));
-
-                AdjustDiameterDialog.VerticalOffset = 100; // Window.Current.Bounds.Height - AdjustDiameterDialog.Child.DesiredSize.Height;
+                AdjustDiameterGrid.Width = ApplicationView.GetForCurrentView().VisibleBounds.Width;
+                AdjustDiameterGrid.Height = 100;
+                AdjustDiameterDialog.VerticalOffset = ApplicationView.GetForCurrentView().VisibleBounds.Height - (AdjustDiameterGrid.Height) - AndroidAppBarHeight;
                 AdjustDiameterDialog.IsOpen = true;
             }
         }

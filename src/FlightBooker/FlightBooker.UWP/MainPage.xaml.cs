@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System.Reactive.Concurrency;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -16,7 +17,7 @@ namespace FlightBooker
         {
             InitializeComponent();
 
-            _viewModel = new Common.MainPageViewModel();
+            _viewModel = new Common.MainPageViewModel(new CoreDispatcherScheduler(Dispatcher));
 
             DataContext = _viewModel;
         }

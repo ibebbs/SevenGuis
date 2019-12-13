@@ -8,14 +8,14 @@ namespace Cells.Common.Spreadsheet
 {
     public class Sheet : IDisposable
     {
-        private readonly Crux.IBus _bus;
+        private readonly MVx.Observable.IBus _bus;
         private readonly Dictionary<Index, Cell> _cells;
         private readonly Expression.Evaluator _expressionEvaluator;
         private readonly Expression.Dependencies _expressionDependencies;
 
         private IDisposable _behaviours;
 
-        public Sheet(Crux.IBus bus)
+        public Sheet(MVx.Observable.IBus bus)
         {
             _bus = bus;
             _cells = new Dictionary<Index, Cell>();

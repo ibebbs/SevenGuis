@@ -5,25 +5,23 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Crud
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private readonly Crux.Property<string> _filter;
-        private readonly Crux.Property<string> _name;
-        private readonly Crux.Property<string> _surname;
-        private readonly Crux.Property<IEnumerable<FullName>> _names;
-        private readonly Crux.Property<FullName> _selected;
-        private readonly Crux.Command _create;
-        private readonly Crux.Command _update;
-        private readonly Crux.Command _delete;
+        private readonly MVx.Observable.Property<string> _filter;
+        private readonly MVx.Observable.Property<string> _name;
+        private readonly MVx.Observable.Property<string> _surname;
+        private readonly MVx.Observable.Property<IEnumerable<FullName>> _names;
+        private readonly MVx.Observable.Property<FullName?> _selected;
+        private readonly MVx.Observable.Command _create;
+        private readonly MVx.Observable.Command _update;
+        private readonly MVx.Observable.Command _delete;
 
         private readonly BehaviorSubject<IEnumerable<FullName>> _allNames;
-        private readonly IObservable<FullName> _fullName;
+        private readonly IObservable<FullName?> _fullName;
 
         private IDisposable _subscription;
 
@@ -32,19 +30,19 @@ namespace Crud
         public MainPageViewModel()
         {
 
-            _filter = new Crux.Property<string>(nameof(Filter), args => PropertyChanged?.Invoke(this, args));
-            _name = new Crux.Property<string>(nameof(Name), args => PropertyChanged?.Invoke(this, args));
-            _surname = new Crux.Property<string>(nameof(Surname), args => PropertyChanged?.Invoke(this, args));
-            _names = new Crux.Property<IEnumerable<FullName>>(nameof(Names), args => PropertyChanged?.Invoke(this, args));
-            _selected = new Crux.Property<FullName>(null, nameof(Selected), args => PropertyChanged?.Invoke(this, args));
-            _create = new Crux.Command();
-            _update = new Crux.Command();
-            _delete = new Crux.Command();
+            _filter = new MVx.Observable.Property<string>(nameof(Filter), args => PropertyChanged?.Invoke(this, args));
+            _name = new MVx.Observable.Property<string>(nameof(Name), args => PropertyChanged?.Invoke(this, args));
+            _surname = new MVx.Observable.Property<string>(nameof(Surname), args => PropertyChanged?.Invoke(this, args));
+            _names = new MVx.Observable.Property<IEnumerable<FullName>>(nameof(Names), args => PropertyChanged?.Invoke(this, args));
+            _selected = new MVx.Observable.Property<FullName?>(null, nameof(Selected), args => PropertyChanged?.Invoke(this, args));
+            _create = new MVx.Observable.Command();
+            _update = new MVx.Observable.Command();
+            _delete = new MVx.Observable.Command();
 
             _allNames = new BehaviorSubject<IEnumerable<FullName>>(Enumerable.Empty<FullName>());
             _fullName = Observable
                 .CombineLatest(_name, _surname)
-                .Select(parts => parts.Any(part => string.IsNullOrEmpty(part)) ? null : new FullName { Name = parts[0], Surname = parts[1] })
+                .Select(parts => parts.Any(part => string.IsNullOrEmpty(part)) ? (FullName?)null : new FullName { Name = parts[0], Surname = parts[1] })
                 .Publish()
                 .RefCount();
         }
@@ -52,22 +50,21 @@ namespace Crud
         private IDisposable ShouldEnableUpdateWhenSelected()
         {
             return _selected
-                .Select(selected => selected != null)
+                .Select(selected => selected.HasValue)
                 .Subscribe(_update);
         }
 
         private IDisposable ShouldEnableDeleteWhenSelected()
         {
             return _selected
-                .Select(selected => selected != null)
+                .Select(selected => selected.HasValue)
                 .Subscribe(_delete);
         }
 
         private IDisposable ShouldEnableCreateWhenNameAndSurnameArePopulated()
         {
-            return Observable
-                .CombineLatest(_name, _surname)
-                .Select(parts => parts.All(part => !string.IsNullOrEmpty(part)))
+            return _fullName
+                .Select(name => name.HasValue)
                 .Subscribe(_create);
         }
 
@@ -75,14 +72,14 @@ namespace Crud
         {
             var allNames = _create
                 .WithLatestFrom(_fullName, (obj, name) => name)
-                .Where(fullName => fullName != null)
-                .WithLatestFrom(_allNames, (current, all) => all.Concat(new[] { current }))
+                .Where(fullName => fullName.HasValue)
+                .WithLatestFrom(_allNames, (current, all) => all.Concat(new[] { current.Value }))
                 .Publish()
                 .RefCount();
 
             return new CompositeDisposable(
                 allNames.Subscribe(_allNames),
-                allNames.Select(_ => (FullName)null).Subscribe(_selected)
+                allNames.Select(_ => (FullName?)null).Subscribe(_selected)
             );
         }
 
@@ -106,10 +103,10 @@ namespace Crud
             return _update
                 .WithLatestFrom(_selected, (obj, selected) => selected)
                 .WithLatestFrom(_fullName, (selected, fullName) => new { Selected = selected, FullName = fullName })
-                .Where(tuple => tuple.Selected != null && tuple.FullName != null)
+                .Where(tuple => tuple.Selected.HasValue && tuple.FullName.HasValue)
                 .WithLatestFrom(_allNames, (tuple, allNames) => allNames
-                    .TakeWhile(name => !name.Equals(tuple.Selected))
-                    .Concat(new[] { tuple.FullName })
+                    .TakeWhile(name => !name.Equals(tuple.Selected.Value))
+                    .Concat(new[] { tuple.FullName.Value })
                     .Concat(allNames.SkipWhile(name => !name.Equals(tuple.Selected)).Skip(1))
                     .ToArray())
                 .Subscribe(_allNames);
@@ -119,8 +116,8 @@ namespace Crud
         {
             return _delete
                 .WithLatestFrom(_selected, (obj, selected) => selected)
-                .Where(selected => selected != null)
-                .WithLatestFrom(_allNames, (selected, allNames) => allNames.Except(new[] { selected }).ToArray())
+                .Where(selected => selected.HasValue)
+                .WithLatestFrom(_allNames, (selected, allNames) => allNames.Except(new[] { selected.Value }).ToArray())
                 .Subscribe(_allNames);
         }
 
@@ -185,7 +182,7 @@ namespace Crud
             get { return _names.Get(); }
         }
 
-        public FullName Selected 
+        public FullName? Selected 
         {
             get { return _selected.Get(); }
             set { _selected.Set(value); }

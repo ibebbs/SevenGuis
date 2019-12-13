@@ -1,6 +1,6 @@
 ﻿namespace Crud
 {
-    public class FullName
+    public struct FullName
     {
         public string Name { get; set; }
 

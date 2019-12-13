@@ -10,7 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BooleanToBrushConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StringToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConverterBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FlightTypeIndexConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EnumBindingConverter.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,12 +2,12 @@
 
 namespace FlightBooker.Common
 {
-    public enum FlightType
+    public enum FlightType : int
     {
         [Description("one-way flight")]
-        OneWay,
+        OneWay = 0,
 
         [Description("return flight")]
-        Return
+        Return = 1
     }
 }

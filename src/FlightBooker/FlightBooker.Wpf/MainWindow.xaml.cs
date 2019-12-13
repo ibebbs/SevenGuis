@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reactive.Concurrency;
+using System.Threading;
 using System.Windows;
 
 namespace FlightBooker.Wpf
@@ -14,7 +16,7 @@ namespace FlightBooker.Wpf
         {
             InitializeComponent();
 
-            _viewModel = new Common.MainPageViewModel();
+            _viewModel = new Common.MainPageViewModel(new SynchronizationContextScheduler(SynchronizationContext.Current));
 
             DataContext = _viewModel;
         }

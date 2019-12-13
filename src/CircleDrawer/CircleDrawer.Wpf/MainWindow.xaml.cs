@@ -24,12 +24,10 @@ namespace CircleDrawer.Wpf
     {
         private static IEnumerable<System.Drawing.Point> GetAreaPoint(MouseButtonEventArgs args)
         {
-            switch (args.OriginalSource)
+            if (args.OriginalSource is UIElement element)
             {
-                case Control control:
-                    var location = args.GetPosition(control);
-                    yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
-                    break;
+                var location = args.GetPosition(element);
+                yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
             }
         }
 

@@ -6,10 +6,10 @@ namespace Cells.Common
 {
     public class RowViewModel : INotifyPropertyChanged
     {
-        private readonly Crux.IBus _bus;
+        private readonly MVx.Observable.IBus _bus;
         private readonly IReadOnlyDictionary<char, CellViewModel> _cells;
 
-        public RowViewModel(Crux.IBus bus, int row, CellViewModel[] cells)
+        public RowViewModel(MVx.Observable.IBus bus, int row, CellViewModel[] cells)
         {
             _bus = bus;
             _cells = cells.ToDictionary(cell => cell.Column, cell => cell);

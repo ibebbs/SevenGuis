@@ -11,22 +11,21 @@ namespace Counter.Common
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly Crux.Property<int> _counter;
-        private readonly Crux.Command _increment;
+        private readonly MVx.Observable.Property<int> _counter;
+        private readonly MVx.Observable.Command _increment;
 
         private IDisposable _subscription;
 
         public MainPageViewModel()
         {
-            _counter = new Crux.Property<int>(nameof(Counter), args => PropertyChanged?.Invoke(this, args));
-            _increment = new Crux.Command(true);
+            _counter = new MVx.Observable.Property<int>(nameof(Counter), args => PropertyChanged?.Invoke(this, args));
+            _increment = new MVx.Observable.Command(true);
         }
 
         private IDisposable CounterShouldBeIncrementedWhenIncrementIsInvoked()
         {
-            return _counter
-                .Select(value => _increment.Select(_ => value + 1))
-                .Switch()
+            return _increment
+                .WithLatestFrom(_counter, (_, value) => value + 1)
                 .Subscribe(_counter);
         }
 
@@ -46,14 +45,8 @@ namespace Counter.Common
             }
         }
 
-        public ICommand Increment
-        {
-            get { return _increment; }
-        }
+        public ICommand Increment => _increment;
 
-        public int Counter
-        {
-            get { return _counter.Get(); }
-        }
+        public int Counter => _counter.Get();
     }
 }
