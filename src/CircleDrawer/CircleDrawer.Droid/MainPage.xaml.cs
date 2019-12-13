@@ -21,6 +21,15 @@ namespace CircleDrawer
     {
         private const int AndroidAppBarHeight = 50;
 
+        public static IEnumerable<System.Drawing.Point> GetAreaPoint(TappedRoutedEventArgs args)
+        {
+            if (args.OriginalSource is UIElement element)
+            {
+                var location = args.GetPosition(null);
+                yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
+            }
+        }
+
         private readonly MainPageViewModel _viewModel;
         private readonly IObservable<System.Drawing.Point> _emptyAreaClicked;
         private readonly IObservable<Unit> _adjustDiameterDialogClosed;
@@ -36,7 +45,7 @@ namespace CircleDrawer
 
             _emptyAreaClicked = Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(handler => CirclesContainer.Tapped += handler, handler => CirclesContainer.Tapped -= handler)
-                .SelectMany(pattern => pattern.EventArgs.GetTappedPoint());
+                .SelectMany(pattern => GetAreaPoint(pattern.EventArgs));
 
             _adjustDiameterDialogClosed = Observable
                 .FromEventPattern<object>(handler => AdjustDiameterDialog.Closed += handler, handler => AdjustDiameterDialog.Closed -= handler)
