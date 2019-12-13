@@ -40,7 +40,7 @@ namespace CircleDrawer
                     break;
                 case ListView listView:
                     var itemsPanel = listView.ItemsPanelRoot;
-                    var listViewLocation = args.GetPosition(null);
+                    var listViewLocation = args.GetPosition(itemsPanel);
                     yield return new System.Drawing.Point(Convert.ToInt32(listViewLocation.X), Convert.ToInt32(listViewLocation.Y));
                     break;
             }
