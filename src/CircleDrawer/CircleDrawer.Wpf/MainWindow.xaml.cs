@@ -24,7 +24,7 @@ namespace CircleDrawer.Wpf
     {
         private static IEnumerable<System.Drawing.Point> GetAreaPoint(MouseButtonEventArgs args)
         {
-            if (args.OriginalSource is UIElement element)
+            if (args.OriginalSource is Canvas element)
             {
                 var location = args.GetPosition(element);
                 yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
