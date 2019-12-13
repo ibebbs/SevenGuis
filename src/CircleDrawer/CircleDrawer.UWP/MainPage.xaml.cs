@@ -21,9 +21,9 @@ namespace CircleDrawer
     {
         private static IEnumerable<System.Drawing.Point> GetAreaPoint(TappedRoutedEventArgs args)
         {
-            if (args.OriginalSource is UIElement element)
+            if (args.OriginalSource is Canvas canvas)
             {
-                var location = args.GetPosition(element);
+                var location = args.GetPosition(canvas);
                 yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
             }
         }
