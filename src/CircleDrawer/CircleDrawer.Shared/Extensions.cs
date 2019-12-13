@@ -15,13 +15,17 @@ namespace CircleDrawer
     public static class Extensions
     {
 #if __WPF__        
-        private static IEnumerable<System.Drawing.Point> GetAreaPoint(MouseButtonEventArgs args)
+        private static IEnumerable<System.Drawing.Point> GetAreaPoint(this MouseButtonEventArgs args)
         {
             switch (args.OriginalSource)
             {
                 case Control control:
-                    var location = args.GetPosition(control);
-                    yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
+                    var controlLocation = args.GetPosition(control);
+                    yield return new System.Drawing.Point(Convert.ToInt32(controlLocation.X), Convert.ToInt32(controlLocation.Y));
+                    break;
+                case Canvas canvas:
+                    var canvasLocation = args.GetPosition(canvas);
+                    yield return new System.Drawing.Point(Convert.ToInt32(canvasLocation.X), Convert.ToInt32(canvasLocation.Y));
                     break;
             }
         }
@@ -36,7 +40,7 @@ namespace CircleDrawer
                     break;
                 case ListView listView:
                     var itemsPanel = listView.ItemsPanelRoot;
-                    var listViewLocation = args.GetPosition(itemsPanel);
+                    var listViewLocation = args.GetPosition(null);
                     yield return new System.Drawing.Point(Convert.ToInt32(listViewLocation.X), Convert.ToInt32(listViewLocation.Y));
                     break;
             }

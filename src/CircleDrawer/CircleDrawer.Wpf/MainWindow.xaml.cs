@@ -27,8 +27,12 @@ namespace CircleDrawer.Wpf
             switch (args.OriginalSource)
             {
                 case Control control:
-                    var location = args.GetPosition(control);
-                    yield return new System.Drawing.Point(Convert.ToInt32(location.X), Convert.ToInt32(location.Y));
+                    var controlLocation = args.GetPosition(control);
+                    yield return new System.Drawing.Point(Convert.ToInt32(controlLocation.X), Convert.ToInt32(controlLocation.Y));
+                    break;
+                case Canvas canvas:
+                    var canvasLocation = args.GetPosition(canvas);
+                    yield return new System.Drawing.Point(Convert.ToInt32(canvasLocation.X), Convert.ToInt32(canvasLocation.Y));
                     break;
             }
         }

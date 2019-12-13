@@ -103,6 +103,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Undo" Command="{Binding Undo}" Margin="4"/>
             <Button Content="Redo" Command="{Binding Redo}" Margin="4"/>
+            <Button Content="Adjust" Command="{Binding AdjustDiameter}" Margin="4"/>
         </StackPanel>
         <ListView x:Name="CirclesContainer" Background="White" ItemContainerStyle="{StaticResource CircleContainerStyle}" Grid.Row="1" ItemsSource="{Binding Circles, Mode=OneWay}" SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemContainerTransitions>
@@ -114,8 +115,8 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
-        <Popup x:Name="AdjustDiameterDialog" IsLightDismissEnabled="True">
-            <Grid Grid.Row="2" HorizontalAlignment="Stretch" Padding="10" Width="{Binding ElementName=ContextRoot, Path=ActualWidth}">
+        <Popup x:Name="AdjustDiameterDialog" Grid.Row="2" IsLightDismissEnabled="True">
+            <Grid x:Name="AdjustDiameterGrid" HorizontalAlignment="Stretch" Padding="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
