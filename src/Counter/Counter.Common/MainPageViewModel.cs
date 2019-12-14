@@ -25,7 +25,7 @@ namespace Counter.Common
         private IDisposable CounterShouldBeIncrementedWhenIncrementIsInvoked()
         {
             return _increment
-                .WithLatestFrom(_counter, (_, value) => value + 1)
+                .Scan(0, (value, _) => value + 1)
                 .Subscribe(_counter);
         }
 
